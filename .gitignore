@@ -1,0 +1,4 @@
+.env
+samples.json
+__pycache__/
+*.pyc

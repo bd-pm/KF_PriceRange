@@ -1,0 +1,63 @@
+{
+  "_comment": "앨범 외 이벤트/출처 표현 정규화. source_type 분류에 사용",
+
+  "source_type_keywords": {
+    "Concert": [
+      "콘서트", "투어", "concert", "tour", "공방", "공개방송",
+      "리듬하이브", "입장기프트", "입장 기프트", "컨페티", "confetti"
+    ],
+    "Fan Meeting": [
+      "팬미팅", "fan meeting", "fanmeeting", "팬콘", "fan concert"
+    ],
+    "Season's Greeting": [
+      "시즌그리팅", "season's greeting", "seasons greeting", "sg"
+    ],
+    "Fan Club": [
+      "멤버십", "membership", "멤버쉽", "팬클럽", "fan club", "fanclub",
+      "위버스", "weverse", "공홈", "팬키트", "fan kit",
+      "1기", "2기", "3기", "4기", "5기", "6기", "7기", "8기",
+      "키트", "kit"
+    ],
+    "Fan Sign": [
+      "팬사인회", "fan sign", "fansign", "싸인포카", "사인포카",
+      "싸폴", "사폴", "싸인폴라", "사인폴라로이드"
+    ],
+    "Collabo": [
+      "콜라보", "collab", "collaboration",
+      "메디힐", "맥도날드", "크록스", "리스테린", "대웅제약",
+      "에뛰드", "qq뮤직", "큐큐뮤직", "세븐일레븐", "7-eleven",
+      "메이크스타", "makestar", "위드뮤", "사운드웨이브",
+      "비스테이지", "b-stage", "알라딘", "yes24", "교보", "핫트랙스"
+    ],
+    "Benefit": [
+      "특전", "구매특전", "응모", "응모포카", "랜덤", "럭키드로우",
+      "lucky draw", "포토팩", "증사", "증정사진",
+      "미공포", "비공굿", "비공개", "공굿"
+    ],
+    "Etc": [
+      "생일포카", "생일", "birthday",
+      "전시회", "팝업", "popup", "pop-up",
+      "폴라로이드", "폴라", "polaroid",
+      "트레카", "트레이딩카드", "trading card"
+    ]
+  },
+
+  "event_aliases": {
+    "_comment": "특정 이벤트명 별칭 → 정규화 표기",
+    "SMCU": "SM Culture Universe",
+    "애니티즈": "ANITEEZ",
+    "리듬하이브": "Rhythm Hive Concert",
+    "사이존": "TWS 24/7 FOR YOU",
+    "42존": "TWS 멤버십 2기",
+    "42멤버쉽": "TWS 멤버십 2기",
+    "엔진존": "ENHYPEN Fan Club",
+    "황춘": "TXT 멤버십",
+    "모아": "TXT Fan Club",
+    "플리": "PLAVE Fan Club",
+    "더비": "The Boyz Fan Club",
+    "마이데이": "DAY6 Fan Club",
+    "아미": "BTS Fan Club",
+    "슴30주년": "SM 30th Anniversary",
+    "브리즈재팬": "RIIZE Japan Fan Club"
+  }
+}

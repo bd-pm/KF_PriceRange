@@ -1,0 +1,164 @@
+{
+  "_comment": "key = 정규화된 한국어 이름, value = 해당 멤버를 가리키는 모든 표현. artist 필드와 함께 사용",
+
+  "BTS": {
+    "RM": ["RM", "rm", "남준", "김남준", "랩몬", "알엠"],
+    "진": ["진", "Jin", "jin", "김석진", "석진", "씨진"],
+    "슈가": ["슈가", "Suga", "suga", "민윤기", "윤기", "어거스트디", "agustd"],
+    "제이홉": ["제이홉", "J-Hope", "j-hope", "jhope", "정호석", "호석"],
+    "지민": ["지민", "Jimin", "jimin", "박지민"],
+    "뷔": ["뷔", "V", "v", "김태형", "태형", "태태"],
+    "정국": ["정국", "Jungkook", "jungkook", "JK", "jk", "전정국", "Jung Kook"]
+  },
+  "Stray Kids": {
+    "방찬": ["방찬", "Bang Chan", "bangchan", "크리스"],
+    "리노": ["리노", "Lee Know", "leeknow", "이민호"],
+    "창빈": ["창빈", "Changbin", "changbin", "서창빈"],
+    "현진": ["현진", "Hyunjin", "hyunjin", "황현진"],
+    "한": ["한", "Han", "han", "한지성"],
+    "필릭스": ["필릭스", "Felix", "felix", "이필릭스"],
+    "승민": ["승민", "Seungmin", "seungmin", "김승민"],
+    "아이엔": ["아이엔", "I.N", "in", "양정인"]
+  },
+  "ENHYPEN": {
+    "정원": ["정원", "Jungwon", "jungwon", "양정원"],
+    "희승": ["희승", "Heeseung", "heeseung", "이희승"],
+    "제이": ["제이", "Jay", "jay", "박종성"],
+    "제이크": ["제이크", "Jake", "jake", "심재윤"],
+    "선우": ["선우", "Sunoo", "sunoo", "김선우"],
+    "성훈": ["성훈", "Sunghoon", "sunghoon", "박성훈"],
+    "니키": ["니키", "Niki", "niki", "니시무라 리키"]
+  },
+  "NCT 127": {
+    "태일": ["태일", "Taeil", "taeil", "문태일"],
+    "쟈니": ["쟈니", "Johnny", "johnny", "서영호"],
+    "태용": ["태용", "Taeyong", "taeyong", "이태용"],
+    "유타": ["유타", "Yuta", "yuta", "나카모토 유타"],
+    "도영": ["도영", "Doyoung", "doyoung", "김도영"],
+    "재현": ["재현", "Jaehyun", "jaehyun", "정재현"],
+    "정우": ["정우", "Jungwoo", "jungwoo", "김정우"],
+    "마크": ["마크", "Mark", "mark", "이마크"],
+    "해찬": ["해찬", "Haechan", "haechan", "이동혁"]
+  },
+  "NCT Dream": {
+    "마크": ["마크", "Mark", "mark"],
+    "런쥔": ["런쥔", "Renjun", "renjun", "황런쥔"],
+    "재민": ["재민", "Jaemin", "jaemin", "나재민"],
+    "헨드리": ["헨드리", "Hendery", "hendery", "황관헨"],
+    "천러": ["천러", "Chenle", "chenle", "정천러"],
+    "지성": ["지성", "Jisung", "jisung", "박지성"],
+    "해찬": ["해찬", "Haechan", "haechan"]
+  },
+  "NCT Wish": {
+    "시온": ["시온", "Sion", "sion"],
+    "료": ["료", "Ryo", "ryo"],
+    "재희": ["재희", "Jaehee", "jaehee"],
+    "리쿠": ["리쿠", "Riku", "riku"],
+    "사쿠야": ["사쿠야", "Sakuya", "sakuya"],
+    "에릭": ["에릭", "Eric", "eric"]
+  },
+  "SEVENTEEN": {
+    "에스쿱스": ["에스쿱스", "S.Coups", "scoups", "최승철", "승철"],
+    "정한": ["정한", "Jeonghan", "jeonghan", "윤정한"],
+    "조슈아": ["조슈아", "Joshua", "joshua", "홍지수"],
+    "준": ["준", "Jun", "jun", "문준휘"],
+    "호시": ["호시", "Hoshi", "hoshi", "권순영"],
+    "원우": ["원우", "Wonwoo", "wonwoo", "전원우"],
+    "울지": ["울지", "Woozi", "woozi", "이지훈"],
+    "도겸": ["도겸", "DK", "dk", "이석민"],
+    "민규": ["민규", "Mingyu", "mingyu", "김민규"],
+    "더에잇": ["더에잇", "The8", "the8", "서명호"],
+    "승관": ["승관", "Seungkwan", "seungkwan", "부승관"],
+    "버논": ["버논", "Vernon", "vernon", "최한솔"],
+    "디노": ["디노", "Dino", "dino", "이찬"]
+  },
+  "TXT": {
+    "연준": ["연준", "Yeonjun", "yeonjun", "최연준", "황춘"],
+    "수빈": ["수빈", "Soobin", "soobin", "최수빈"],
+    "범규": ["범규", "Beomgyu", "beomgyu", "최범규"],
+    "태현": ["태현", "Taehyun", "taehyun", "강태현"],
+    "휴닝카이": ["휴닝카이", "Huening Kai", "hueningkai", "카이", "휴카"]
+  },
+  "ATEEZ": {
+    "홍중": ["홍중", "Hongjoong", "hongjoong", "김홍중"],
+    "성화": ["성화", "Seonghwa", "seonghwa", "박성화"],
+    "윤호": ["윤호", "Yunho", "yunho", "정윤호"],
+    "여상": ["여상", "Yeosang", "yeosang", "강여상"],
+    "산": ["산", "San", "san", "최산"],
+    "민기": ["민기", "Mingi", "mingi", "송민기"],
+    "우영": ["우영", "Wooyoung", "wooyoung", "정우영"],
+    "종호": ["종호", "Jongho", "jongho", "최종호"]
+  },
+  "Boynextdoor": {
+    "성호": ["성호", "Sungho", "sungho"],
+    "리우": ["리우", "Riu", "riu"],
+    "명재현": ["명재현", "재현", "Jaehyun"],
+    "태산": ["태산", "Taesan", "taesan"],
+    "이한": ["이한", "Leehan", "leehan"],
+    "운학": ["운학", "Woonhak", "woonhak"]
+  },
+  "ZeroBaseOne": {
+    "성한빈": ["성한빈", "Sung Hanbin", "sunghanbinn"],
+    "김규빈": ["김규빈", "Kim Gyuvin", "kimgyuvin"],
+    "장하오": ["장하오", "Zhang Hao", "zhanghao"],
+    "석매튜": ["석매튜", "Seok Matthew", "seokmatthew"],
+    "김태래": ["김태래", "Kim Taerae", "kimtaerae"],
+    "리키": ["리키", "Ricky", "ricky"],
+    "박건욱": ["박건욱", "Park Gunwook", "parkgunwook"],
+    "한유진": ["한유진", "Han Yujin", "hanyujin"],
+    "앤더블": ["앤더블", "Kim Jiwoong", "kimjiwoong"]
+  },
+  "RIIZE": {
+    "쇼타로": ["쇼타로", "Shotaro", "shotaro"],
+    "은석": ["은석", "Eunseok", "eunseok"],
+    "성찬": ["성찬", "Seungchan", "seungchan"],
+    "원빈": ["원빈", "Wonbin", "wonbin"],
+    "앤톤": ["앤톤", "Anton", "anton"],
+    "소희": ["소희", "Sohee", "sohee"],
+    "재현": ["재현", "Jaehyun", "jaehyun"]
+  },
+  "TWS": {
+    "희찬": ["희찬", "Hichan", "hichan"],
+    "도훈": ["도훈", "Dohoon", "dohoon"],
+    "신유": ["신유", "Shinyu", "shinyu"],
+    "경민": ["경민", "Kyungmin", "kyungmin"],
+    "영재": ["영재", "Youngjae", "youngjae"],
+    "지훈": ["지훈", "Jihoon", "jihoon"]
+  },
+  "PLAVE": {
+    "예준": ["예준", "Yejun", "yejun"],
+    "노아": ["노아", "Noah", "noah"],
+    "밤비": ["밤비", "Bambi", "bambi"],
+    "하민": ["하민", "Hamin", "hamin"],
+    "은호": ["은호", "Eunho", "eunho"]
+  },
+  "DAY6": {
+    "성진": ["성진", "Sungjin", "sungjin", "박성진"],
+    "영케이": ["영케이", "Young K", "youngk", "Brian", "brian", "강영현"],
+    "원필": ["원필", "Wonpil", "wonpil", "김원필"],
+    "도운": ["도운", "Dowoon", "dowoon", "윤도운"]
+  },
+  "The Boyz": {
+    "상연": ["상연", "Sangyeon", "sangyeon"],
+    "제이콥": ["제이콥", "Jacob", "jacob"],
+    "영훈": ["영훈", "Younghoon", "younghoon"],
+    "현재": ["현재", "Hyunjae", "hyunjae"],
+    "주연": ["주연", "Juyeon", "juyeon"],
+    "케빈": ["케빈", "Kevin", "kevin"],
+    "뉴": ["뉴", "New", "new"],
+    "큐": ["큐", "Q", "q"],
+    "주학": ["주학", "Juhaknyeon", "juhaknyeon"],
+    "선우": ["선우", "Sunwoo", "sunwoo"],
+    "에릭": ["에릭", "Eric", "eric"]
+  },
+
+  "WayV": {
+    "쿤": ["쿤", "Kun", "kun"],
+    "텐": ["텐", "Ten", "ten"],
+    "루카스": ["루카스", "Lucas", "lucas", "황쉬밍"],
+    "샤오쥔": ["샤오쥔", "Xiaojun", "xiaojun"],
+    "헨드리": ["헨드리", "Hendery", "hendery"],
+    "양양": ["양양", "Yangyang", "yangyang"],
+    "윈윈": ["윈윈", "WinWin", "winwin", "동시추"]
+  }
+}

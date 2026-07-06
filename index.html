@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Price Range — Bunjang Global</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700;6..12,800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f4f6;
+  --surface:#fff;
+  --surface2:#f8f8fa;
+  --border:#e6e6ec;
+  --border2:#ededf2;
+  --text-primary:#0e0e14;
+  --text-secondary:#5c5c72;
+  --text-tertiary:#a0a0b8;
+  --accent:#ff4400;
+  --accent-light:#fff3ef;
+  --chip-bg:#ececf2;
+  --radius-card:14px;
+  --radius-chip:100px;
+  --shadow-card:0 1px 3px rgba(0,0,0,.05),0 4px 16px rgba(0,0,0,.06);
+  --shadow-hover:0 4px 8px rgba(0,0,0,.05),0 16px 48px rgba(0,0,0,.14);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito Sans',-apple-system,sans-serif;background:var(--bg);color:var(--text-primary);min-height:100vh;-webkit-font-smoothing:antialiased}
+
+/* ── Header ── */
+.header{background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:200}
+.header-inner{max-width:1240px;margin:0 auto;padding:11px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.logo{font-size:16px;font-weight:800;letter-spacing:-.3px;white-space:nowrap;display:flex;align-items:center;gap:7px;flex-shrink:0}
+.logo-bj{color:var(--accent)}
+.logo-sep{width:1px;height:14px;background:var(--border);flex-shrink:0}
+.logo-pr{color:var(--text-primary)}
+.search-wrap{position:relative;width:220px;flex-shrink:0}
+.search-icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--text-tertiary);pointer-events:none;display:flex}
+.search-input{width:100%;height:36px;padding:0 12px 0 34px;border:1.5px solid var(--border);border-radius:var(--radius-chip);font-family:inherit;font-size:13px;font-weight:600;color:var(--text-primary);background:var(--surface2);outline:none;transition:border-color .15s,background .15s,width .2s}
+.search-input:focus{border-color:var(--accent);background:var(--surface)}
+.search-input::placeholder{color:var(--text-tertiary);font-weight:400}
+
+/* ── Category hero tabs ── */
+.cat-tabs{background:var(--surface);border-bottom:1px solid var(--border);padding:0 16px}
+.cat-tabs-inner{max-width:1240px;margin:0 auto;display:flex;gap:0}
+.cat-tab{flex:1;max-width:240px;padding:0;border:none;background:none;cursor:pointer;font-family:inherit;position:relative}
+.cat-tab-inner{display:flex;align-items:center;gap:10px;padding:12px 16px 11px;border-bottom:2.5px solid transparent;transition:border-color .15s}
+.cat-tab.active .cat-tab-inner{border-bottom-color:var(--accent)}
+.cat-tab-emoji{font-size:22px;line-height:1;flex-shrink:0}
+.cat-tab-text{text-align:left}
+.cat-tab-name{font-size:13px;font-weight:800;color:var(--text-primary);display:block;line-height:1.2}
+.cat-tab-sub{font-size:11px;font-weight:600;color:var(--text-tertiary);display:block;line-height:1.3}
+.cat-tab:not(.active) .cat-tab-name{color:var(--text-tertiary)}
+
+/* ── Filters ── */
+.filters{background:var(--surface);border-bottom:1px solid var(--border)}
+.filter-row{max-width:1240px;margin:0 auto;padding:8px 16px;display:flex;gap:6px;align-items:center;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.filter-row::-webkit-scrollbar{display:none}
+.filter-divider-line{height:1px;background:var(--border2)}
+.filter-label{font-size:10px;font-weight:800;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.7px;white-space:nowrap;padding-right:4px;flex-shrink:0}
+.chip{display:inline-flex;align-items:center;gap:4px;height:28px;padding:0 11px;border-radius:var(--radius-chip);font-family:inherit;font-size:12px;font-weight:700;color:var(--text-secondary);background:var(--chip-bg);border:1.5px solid transparent;cursor:pointer;white-space:nowrap;transition:all .12s;user-select:none;flex-shrink:0}
+.chip:hover{color:var(--text-primary);background:#e4e4ec}
+.chip.active{background:var(--text-primary);color:#fff;border-color:var(--text-primary)}
+.chip-badge{font-size:10px;font-weight:700;padding:1px 5px;border-radius:100px;background:rgba(0,0,0,.07);color:inherit;opacity:.7}
+.chip.active .chip-badge{background:rgba(255,255,255,.18);opacity:1}
+
+/* ── Toolbar ── */
+.toolbar{max-width:1240px;margin:0 auto;padding:12px 16px 8px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.result-count{font-size:12px;font-weight:600;color:var(--text-secondary)}
+.result-count strong{color:var(--text-primary);font-weight:800}
+.sort-group{display:flex;gap:4px}
+.sort-btn{height:26px;padding:0 10px;border-radius:var(--radius-chip);font-family:inherit;font-size:11px;font-weight:700;color:var(--text-tertiary);background:transparent;border:1.5px solid var(--border);cursor:pointer;transition:all .12s;white-space:nowrap}
+.sort-btn:hover{color:var(--text-secondary)}
+.sort-btn.active{color:var(--text-primary);border-color:var(--text-primary);background:var(--surface)}
+
+/* ── Grid ── */
+.grid{max-width:1240px;margin:0 auto;padding:0 16px 56px;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+
+/* ── Card ── */
+.card{background:var(--surface);border-radius:var(--radius-card);border:1px solid var(--border2);overflow:visible;cursor:pointer;transition:transform .15s,box-shadow .15s,border-color .15s;display:flex;flex-direction:column;position:relative}
+.card:hover{transform:translateY(-3px);box-shadow:var(--shadow-hover);border-color:var(--border)}
+.card-img-wrap{position:relative;width:100%;aspect-ratio:1;background:var(--surface2);overflow:hidden;border-radius:var(--radius-card) var(--radius-card) 0 0;flex-shrink:0}
+.card-img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s}
+.card:hover .card-img{transform:scale(1.04)}
+.card-img-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:40px;color:var(--border)}
+.card-type-badge{position:absolute;top:10px;right:10px;display:inline-flex;align-items:center;height:20px;padding:0 7px;border-radius:5px;font-size:10px;font-weight:800}
+
+.card-body{padding:14px;flex:1;display:flex;flex-direction:column}
+.card-click-area{cursor:pointer}
+.card-artist{font-size:10px;font-weight:800;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.6px;margin-bottom:2px}
+.card-member{font-size:15px;font-weight:800;color:var(--text-primary);line-height:1.25;margin-bottom:1px}
+.card-album{font-size:12px;font-weight:600;color:var(--text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:12px}
+
+.confidence{display:inline-flex;align-items:center;gap:3px;font-size:10px;font-weight:700;padding:2px 7px;border-radius:100px;margin-bottom:8px;align-self:flex-start}
+.conf-high{background:#e8fdf3;color:#007a47}
+.conf-mid{background:#fff8e0;color:#7a5500}
+.conf-low{background:#f0f0f6;color:var(--text-tertiary)}
+
+.price-row{display:flex;align-items:baseline;gap:5px;margin-bottom:10px}
+.price-main{font-size:22px;font-weight:800;letter-spacing:-.8px;color:var(--text-primary)}
+.price-label{font-size:11px;font-weight:700;color:var(--text-tertiary)}
+
+/* ── Histogram — key fix: pointer-events on each bar ── */
+.histo-wrap{margin-bottom:4px;position:relative}
+.histo{display:flex;align-items:flex-end;gap:2px;height:32px}
+.hbar{
+  flex:1;border-radius:2px 2px 0 0;min-height:3px;
+  position:relative;cursor:crosshair;
+  /* IMPORTANT: pointer-events must be enabled per bar */
+  pointer-events:all;
+  transition:filter .1s;
+}
+.hbar:hover{filter:brightness(.8)}
+.hbar-base{background:#e4e4ef}
+.hbar-near{background:#ffbba8}
+.hbar-peak{background:var(--accent)}
+.histo-axis{display:flex;justify-content:space-between;margin-top:4px}
+.histo-axis span{font-size:10px;font-weight:700;color:var(--text-tertiary)}
+
+.card-footer{display:flex;align-items:center;justify-content:space-between;padding-top:11px;border-top:1px solid var(--border2);margin-top:auto}
+.listing-stat{font-size:11px;font-weight:600;color:var(--text-tertiary)}
+.listing-stat strong{color:var(--text-secondary);font-weight:800}
+.go-btn{display:inline-flex;align-items:center;gap:4px;height:26px;padding:0 10px;background:var(--accent-light);color:var(--accent);border-radius:var(--radius-chip);font-family:inherit;font-size:11px;font-weight:800;border:none;cursor:pointer;text-decoration:none;transition:background .12s;white-space:nowrap;flex-shrink:0}
+.go-btn:hover{background:#ffe0d4}
+
+/* ── Tooltip ── fixed position, never clipped ── */
+.tooltip{
+  position:fixed;z-index:9999;
+  background:#111118;color:#fff;
+  border-radius:12px;padding:0;
+  box-shadow:0 8px 40px rgba(0,0,0,.32);
+  pointer-events:none;
+  opacity:0;transition:opacity .1s;
+  width:180px;overflow:hidden;
+}
+.tooltip.show{opacity:1}
+.tooltip-img{width:100%;aspect-ratio:1;object-fit:cover;display:block;background:#2a2a3a}
+.tooltip-body{padding:10px 12px}
+.tooltip-price{font-size:18px;font-weight:800;letter-spacing:-.5px;line-height:1.1;margin-bottom:4px}
+.tooltip-name{font-size:11px;font-weight:600;color:rgba(255,255,255,.55);line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.tooltip-range{font-size:10px;font-weight:700;color:rgba(255,255,255,.35);margin-top:5px}
+
+/* ── Empty ── */
+.empty{grid-column:1/-1;text-align:center;padding:80px 20px}
+.empty-emoji{font-size:36px;margin-bottom:12px}
+.empty-title{font-size:15px;font-weight:800;color:var(--text-secondary);margin-bottom:4px}
+.empty-sub{font-size:13px;color:var(--text-tertiary)}
+
+/* ── Mobile ── */
+@media(max-width:600px){
+  .search-wrap{width:160px}
+  .grid{grid-template-columns:1fr 1fr;padding:0 12px 48px;gap:10px}
+  .card-body{padding:10px}
+  .card-member{font-size:13px}
+  .price-main{font-size:18px}
+  .cat-tab-inner{padding:10px 12px 9px}
+  .cat-tab-emoji{font-size:18px}
+}
+@media(max-width:380px){
+  .grid{grid-template-columns:1fr}
+  .search-wrap{width:130px}
+}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+  <div class="header-inner">
+    <div class="logo">
+      <span class="logo-bj">bunjang</span>
+      <div class="logo-sep"></div>
+      <span class="logo-pr">Price Range</span>
+    </div>
+    <div class="search-wrap">
+      <span class="search-icon">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <circle cx="6" cy="6" r="4.2" stroke="currentColor" stroke-width="1.6"/>
+          <path d="M9.2 9.2l3 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        </svg>
+      </span>
+      <input class="search-input" id="searchInput" type="text" placeholder="Artist, member…">
+    </div>
+  </div>
+</header>
+
+<!-- Category tabs -->
+<div class="cat-tabs">
+  <div class="cat-tabs-inner">
+    <button class="cat-tab active" id="tabKpop" onclick="switchCat('kpop')">
+      <div class="cat-tab-inner">
+        <span class="cat-tab-emoji">🎴</span>
+        <div class="cat-tab-text">
+          <span class="cat-tab-name">K-pop</span>
+          <span class="cat-tab-sub">Photocards</span>
+        </div>
+      </div>
+    </button>
+    <button class="cat-tab" id="tabKidult" onclick="switchCat('kidult')">
+      <div class="cat-tab-inner">
+        <span class="cat-tab-emoji">🧸</span>
+        <div class="cat-tab-text">
+          <span class="cat-tab-name">Kidult</span>
+          <span class="cat-tab-sub">Figures & Dolls</span>
+        </div>
+      </div>
+    </button>
+  </div>
+</div>
+
+<!-- Artist filter -->
+<div class="filters">
+  <div class="filter-row" id="artistRow">
+    <span class="filter-label">Artist</span>
+  </div>
+  <div class="filter-divider-line"></div>
+  <div class="filter-row" id="typeRow">
+    <span class="filter-label">Type</span>
+  </div>
+</div>
+
+<!-- Toolbar -->
+<div class="toolbar">
+  <span class="result-count" id="resultCount">Loading…</span>
+  <div class="sort-group">
+    <button class="sort-btn active" data-sort="count">Most listings</button>
+    <button class="sort-btn" data-sort="median_desc">Price ↑</button>
+    <button class="sort-btn" data-sort="median_asc">Price ↓</button>
+  </div>
+</div>
+
+<!-- Grid -->
+<div class="grid" id="grid"></div>
+
+<!-- Tooltip (outside grid, fixed position) -->
+<div class="tooltip" id="tooltip">
+  <img class="tooltip-img" id="ttImg" src="" alt="">
+  <div class="tooltip-body">
+    <div class="tooltip-price" id="ttPrice"></div>
+    <div class="tooltip-name" id="ttName"></div>
+    <div class="tooltip-range" id="ttRange"></div>
+  </div>
+</div>
+
+<script>
+// ── Constants ────────────────────────────────────────────────────────────
+const TYPE_COLORS={
+  "Album":            {bg:"#e6eeff",text:"#1a44cc"},
+  "Concert":          {bg:"#fff0e0",text:"#b85500"},
+  "Fan Club":         {bg:"#eafff3",text:"#007a47"},
+  "Benefit":          {bg:"#f3eeff",text:"#6600cc"},
+  "Collabo":          {bg:"#fffae0",text:"#886600"},
+  "Fan Meeting":      {bg:"#e6fff9",text:"#006655"},
+  "Fan Sign":         {bg:"#ffe6f8",text:"#880066"},
+  "Season's Greeting":{bg:"#e6f2ff",text:"#005599"},
+  "Etc":              {bg:"#f0f0f6",text:"#555570"},
+};
+
+// English member name map (Korean → English)
+const MEMBER_EN={
+  "정국":"Jungkook","지민":"Jimin","뷔":"V","진":"Jin","슈가":"Suga","제이홉":"J-Hope","RM":"RM",
+  "니키":"Nishimura Riki","정원":"Jungwon","희승":"Heeseung","제이":"Jay","제이크":"Jake","선우":"Sunoo","성훈":"Sunghoon",
+  "방찬":"Bang Chan","리노":"Lee Know","창빈":"Changbin","현진":"Hyunjin","한":"Han","필릭스":"Felix","승민":"Seungmin","아이엔":"I.N",
+  "에스쿱스":"S.Coups","정한":"Jeonghan","조슈아":"Joshua","준":"Jun","호시":"Hoshi","원우":"Wonwoo","울지":"Woozi","도겸":"DK","민규":"Mingyu","더에잇":"The8","승관":"Seungkwan","버논":"Vernon","디노":"Dino",
+  "연준":"Yeonjun","수빈":"Soobin","범규":"Beomgyu","태현":"Taehyun","휴닝카이":"Huening Kai",
+  "홍중":"Hongjoong","성화":"Seonghwa","윤호":"Yunho","여상":"Yeosang","산":"San","민기":"Mingi","우영":"Wooyoung","종호":"Jongho",
+  "쇼타로":"Shotaro","은석":"Eunseok","성찬":"Seungchan","원빈":"Wonbin","앤톤":"Anton","소희":"Sohee",
+  "성한빈":"Sung Hanbin","김규빈":"Kim Gyuvin","장하오":"Zhang Hao","석매튜":"Seok Matthew","김태래":"Kim Taerae","리키":"Ricky","박건욱":"Park Gunwook","한유진":"Han Yujin","앤더블":"Kim Jiwoong",
+  "예준":"Yejun","노아":"Noah","밤비":"Bambi","하민":"Hamin","은호":"Eunho",
+  "성진":"Sungjin","영케이":"Young K","원필":"Wonpil","도운":"Dowoon",
+  "희찬":"Hichan","도훈":"Dohoon","신유":"Shinyu","경민":"Kyungmin","영재":"Youngjae","지훈":"Jihoon",
+  "상연":"Sangyeon","제이콥":"Jacob","영훈":"Younghoon","현재":"Hyunjae","주연":"Juyeon","케빈":"Kevin","뉴":"New","큐":"Q","주학":"Juhaknyeon","에릭":"Eric",
+  "성호":"Sungho","리우":"Riu","명재현":"Jaehyun","태산":"Taesan","이한":"Leehan","운학":"Woonhak",
+  "쿤":"Kun","텐":"Ten","루카스":"Lucas","샤오쥔":"Xiaojun","헨드리":"Hendery","양양":"Yangyang","윈윈":"WinWin",
+  // units
+  "부석순":"BSS","이오데":"Even of Day","늑댕즈":"Neokdaengz","제복":"Jebog","목갈머":"Mokgalmeo","떨차":"Ttteolcha","3RACHA":"3RACHA",
+};
+
+function enName(kr){ return MEMBER_EN[kr] || kr; }
+function imgUrl(raw){ return raw?(raw.replace?raw.replace("{res}","360"):raw):""; }
+function toUSD(krw){ return `$${Math.round(krw/1400)}`; }
+function median(arr){
+  const s=[...arr].sort((a,b)=>a-b), m=Math.floor(s.length/2);
+  return s.length%2?s[m]:(s[m-1]+s[m])/2;
+}
+
+function buildHisto(items, bins=8){
+  const prices=items.map(i=>i.price).filter(p=>p>0);
+  if(prices.length<2) return null;
+  const min=Math.min(...prices), max=Math.max(...prices);
+  if(min===max) return null;
+  const step=(max-min)/bins;
+  const b=Array(bins).fill(null).map(()=>({count:0,items:[]}));
+  items.filter(i=>i.price>0).forEach(item=>{
+    const idx=Math.min(Math.floor((item.price-min)/step),bins-1);
+    b[idx].count++;
+    b[idx].items.push(item);
+  });
+  return {bins:b, min, max, step};
+}
+
+// ── State ────────────────────────────────────────────────────────────────
+let allGroups=[], activeCat="kpop", activeArtist=null, activeType=null, sortMode="count", searchQ="";
+
+function switchCat(cat){
+  activeCat=cat;
+  activeArtist=null; activeType=null;
+  document.getElementById("tabKpop").classList.toggle("active",cat==="kpop");
+  document.getElementById("tabKidult").classList.toggle("active",cat==="kidult");
+  buildFilters(allGroups.filter(g=>g.cat===cat));
+  renderGrid();
+}
+
+function buildGroups(data){
+  const map={};
+  data.filter(r=>!r.exclude&&r.group_key).forEach(r=>{
+    const k=r.group_key;
+    // determine category: figure_doll vs photocard
+    const cat = r.cat || "kpop";
+    if(!map[k]) map[k]={key:k,cat,artist:r.artist_normalized,member:r.member_normalized,album:r.album_or_event_normalized,type:r.source_type_normalized,items:[]};
+    map[k].items.push({pid:r.pid,price:r.price,name:r.name,image:imgUrl(r.image)});
+  });
+  return Object.values(map).filter(g=>g.items.length>=1);
+}
+
+function buildFilters(groups){
+  const aCounts={};
+  groups.forEach(g=>{aCounts[g.artist]=(aCounts[g.artist]||0)+g.items.length;});
+  const artists=Object.entries(aCounts).sort((a,b)=>b[1]-a[1]);
+  const ar=document.getElementById("artistRow");
+  ar.innerHTML='<span class="filter-label">Artist</span>';
+  makeChip(ar,"All",null,"artist");
+  artists.slice(0,20).forEach(([a,c])=>makeChip(ar,a,c,"artist"));
+
+  const tCounts={};
+  groups.forEach(g=>{tCounts[g.type]=(tCounts[g.type]||0)+g.items.length;});
+  const types=Object.entries(tCounts).sort((a,b)=>b[1]-a[1]);
+  const tr=document.getElementById("typeRow");
+  tr.innerHTML='<span class="filter-label">Type</span>';
+  makeChip(tr,"All",null,"type");
+  types.forEach(([t,c])=>makeChip(tr,t,c,"type"));
+}
+
+function makeChip(container,label,count,group){
+  const btn=document.createElement("button");
+  btn.className="chip";
+  btn.dataset.group=group;
+  btn.dataset.value=label==="All"?"":label;
+  btn.innerHTML=label+(count!=null?` <span class="chip-badge">${count}</span>`:"");
+  btn.addEventListener("click",()=>{
+    if(group==="artist") activeArtist=label==="All"?null:label;
+    else activeType=label==="All"?null:label;
+    updateChips(); renderGrid();
+  });
+  container.appendChild(btn);
+}
+
+function updateChips(){
+  document.querySelectorAll(".chip[data-group='artist']").forEach(b=>b.classList.toggle("active",b.dataset.value===(activeArtist||"")));
+  document.querySelectorAll(".chip[data-group='type']").forEach(b=>b.classList.toggle("active",b.dataset.value===(activeType||"")));
+}
+
+function getFiltered(){
+  let g=allGroups.filter(x=>x.cat===activeCat);
+  if(activeArtist) g=g.filter(x=>x.artist===activeArtist);
+  if(activeType) g=g.filter(x=>x.type===activeType);
+  if(searchQ){
+    const q=searchQ.toLowerCase();
+    g=g.filter(x=>(x.artist||"").toLowerCase().includes(q)||(x.member||"").toLowerCase().includes(q)||(x.album||"").toLowerCase().includes(q)||enName(x.member||"").toLowerCase().includes(q));
+  }
+  return g;
+}
+function getSorted(groups){
+  return [...groups].sort((a,b)=>{
+    if(sortMode==="count") return b.items.length-a.items.length;
+    const ma=median(a.items.map(i=>i.price)), mb=median(b.items.map(i=>i.price));
+    return sortMode==="median_desc"?mb-ma:ma-mb;
+  });
+}
+
+// ── Tooltip ──────────────────────────────────────────────────────────────
+const tt=document.getElementById("tooltip");
+let ttActive=false;
+
+function showTT(e, item, count, rangeMin, rangeMax){
+  document.getElementById("ttPrice").textContent=toUSD(item.price);
+  document.getElementById("ttName").textContent=item.name;
+  document.getElementById("ttRange").textContent=`${count} listing${count!==1?"s":""} · ${toUSD(rangeMin)}–${toUSD(rangeMax)}`;
+  const img=document.getElementById("ttImg");
+  if(item.image){img.src=item.image;img.style.display="block";}
+  else img.style.display="none";
+  moveTT(e);
+  tt.classList.add("show");
+  ttActive=true;
+}
+function moveTT(e){
+  const W=190, H=document.getElementById("ttImg").style.display!=="none"?250:110;
+  let x=e.clientX+16, y=e.clientY-H/2;
+  if(x+W>window.innerWidth-8) x=e.clientX-W-16;
+  if(y<8) y=8;
+  if(y+H>window.innerHeight-8) y=window.innerHeight-H-8;
+  tt.style.left=x+"px"; tt.style.top=y+"px";
+}
+function hideTT(){ tt.classList.remove("show"); ttActive=false; }
+document.addEventListener("mousemove",e=>{ if(ttActive) moveTT(e); });
+
+// ── Card render ───────────────────────────────────────────────────────────
+let cardIdx=0;
+function renderCard(g, cid){
+  const prices=g.items.map(i=>i.price).filter(p=>p>0);
+  if(!prices.length) return "";
+  const med=median(prices), minP=Math.min(...prices), maxP=Math.max(...prices), n=prices.length;
+  const color=TYPE_COLORS[g.type]||TYPE_COLORS["Etc"];
+  const lowestItem=g.items.reduce((a,b)=>a.price<b.price?a:b);
+  const bunjangUrl=`https://m.bunjang.co.kr/products/${lowestItem.pid}`;
+
+  const withImg=g.items.filter(i=>i.image);
+  const thumbUrl=withImg.length?withImg[Math.floor(Math.random()*withImg.length)].image:"";
+
+  const memberEn=enName(g.member||"");
+
+  const h=buildHisto(g.items);
+
+  let confCls,confText;
+  if(n>=10){confCls="conf-high";confText=`● ${n} data points`;}
+  else if(n>=4){confCls="conf-mid";confText=`● ${n} listings`;}
+  else{confCls="conf-low";confText=`● ${n} listing${n>1?"s":""}`;}
+
+  let histHtml="";
+  if(h){
+    const maxC=Math.max(...h.bins.map(b=>b.count),1);
+    const medBin=Math.min(Math.floor((med-h.min)/h.step),h.bins.length-1);
+    h.bins.forEach((bin,i)=>{
+      const pct=Math.max(8,Math.round((bin.count/maxC)*100));
+      const cls=i===medBin?"hbar hbar-peak":Math.abs(i-medBin)<=1?"hbar hbar-near":"hbar hbar-base";
+      histHtml+=`<div class="${cls}" style="height:${pct}%" data-bin="${i}"></div>`;
+    });
+  }
+
+  return `
+<div class="card" data-cid="${cid}">
+  <div class="card-img-wrap" onclick="window.open('${bunjangUrl}','_blank')">
+    ${thumbUrl
+      ?`<img class="card-img" src="${thumbUrl}" alt="${memberEn}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`
+      :""}
+    <div class="card-img-placeholder" style="${thumbUrl?"display:none":""}">🎴</div>
+    <span class="card-type-badge" style="background:${color.bg};color:${color.text}">${g.type}</span>
+  </div>
+  <div class="card-body">
+    <div class="card-click-area" onclick="window.open('${bunjangUrl}','_blank')">
+      <div class="card-artist">${g.artist||""}</div>
+      <div class="card-member">${memberEn}</div>
+      <div class="card-album">${g.album||""}</div>
+      <span class="confidence ${confCls}">${confText}</span>
+      <div class="price-row">
+        <span class="price-main">${toUSD(med)}</span>
+        <span class="price-label">median</span>
+      </div>
+    </div>
+    ${h?`
+    <div class="histo-wrap">
+      <div class="histo" data-cid="${cid}">${histHtml}</div>
+      <div class="histo-axis"><span>${toUSD(h.min)}</span><span>${toUSD(h.max)}</span></div>
+    </div>`:""}
+    <div class="card-footer">
+      <span class="listing-stat" onclick="window.open('${bunjangUrl}','_blank')"><strong>${n}</strong> listings</span>
+      <a class="go-btn" href="${bunjangUrl}" target="_blank" onclick="event.stopPropagation()">
+        From ${toUSD(minP)}
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1.5 5h7M5.5 2l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+</div>`;
+}
+
+// Attach histogram hover — called after DOM insert
+// Store group data by cid for event delegation
+const groupByCid={};
+
+function attachHistoEvents(){
+  document.addEventListener("mouseover", e=>{
+    const bar = e.target.closest(".hbar");
+    if(!bar) return;
+    // walk up to find .histo which holds data-cid
+    const histo = bar.closest(".histo");
+    console.log("[hover] bar hit, histo:", histo, "cid:", histo?.dataset?.cid);
+    if(!histo) return;
+    const cid = histo.dataset.cid;
+    const binIdx = parseInt(bar.dataset.bin);
+    if(isNaN(binIdx)) return;
+    const g = groupByCid[cid];
+    console.log("[hover] cid:", cid, "binIdx:", binIdx, "group:", g?.key, "items:", g?.items?.length);
+    if(!g) return;
+    const h = buildHisto(g.items);
+    if(!h) return;
+    const bin = h.bins[binIdx];
+    if(!bin || !bin.count) return;
+    const repItem = bin.items.find(i=>i.image) || bin.items[0];
+    if(!repItem) return;
+    const binMin = h.min + binIdx * h.step;
+    const binMax = Math.min(h.min + (binIdx+1) * h.step, h.max);
+    showTT(e, repItem, bin.count, binMin, binMax);
+  });
+  document.addEventListener("mouseout", e=>{
+    if(e.target.closest(".hbar")) hideTT();
+  });
+}
+
+function renderGrid(){
+  updateChips();
+  const filtered=getFiltered();
+  const sorted=getSorted(filtered);
+  const totalListings=filtered.reduce((s,g)=>s+g.items.length,0);
+  document.getElementById("resultCount").innerHTML=`<strong>${sorted.length}</strong> products · ${totalListings} listings`;
+
+  const grid=document.getElementById("grid");
+  if(!sorted.length){
+    grid.innerHTML=`<div class="empty"><div class="empty-emoji">🔍</div><div class="empty-title">No results</div><div class="empty-sub">Try a different search or filter</div></div>`;
+    return;
+  }
+  cardIdx=0;
+  const cards=sorted.map(g=>{
+    const cid="c"+(cardIdx++);
+    groupByCid[cid]=g;
+    return renderCard(g, cid);
+  });
+  grid.innerHTML=cards.join("");
+}
+
+// Sort
+document.querySelectorAll(".sort-btn").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    document.querySelectorAll(".sort-btn").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    sortMode=btn.dataset.sort;
+    renderGrid();
+  });
+});
+
+// Search
+document.getElementById("searchInput").addEventListener("input",e=>{
+  searchQ=e.target.value.trim();
+  renderGrid();
+});
+
+// Attach delegation once
+attachHistoEvents();
+
+// ── Load ──────────────────────────────────────────────────────────────────
+fetch("parsed_all.json")
+  .then(r=>r.json())
+  .then(data=>{
+    // tag each item with cat
+    const tagged=data.map(r=>({...r, cat:"kpop"}));
+    allGroups=buildGroups(tagged);
+    buildFilters(allGroups.filter(g=>g.cat==="kpop"));
+    renderGrid();
+  })
+  .catch(()=>{
+    // mock fallback
+    const mock=[
+      {group_key:"BTS||정국||골든||Album",artist_normalized:"BTS",member_normalized:"정국",album_or_event_normalized:"Golden",source_type_normalized:"Album",exclude:false,pid:"001",price:12000,name:"BTS Jungkook Golden photocard",image:"",cat:"kpop"},
+      {group_key:"BTS||정국||골든||Album",artist_normalized:"BTS",member_normalized:"정국",album_or_event_normalized:"Golden",source_type_normalized:"Album",exclude:false,pid:"002",price:9000,name:"BTS Jungkook Golden pc",image:"",cat:"kpop"},
+      {group_key:"BTS||정국||골든||Album",artist_normalized:"BTS",member_normalized:"정국",album_or_event_normalized:"Golden",source_type_normalized:"Album",exclude:false,pid:"003",price:15000,name:"BTS Jungkook Golden photocard 3",image:"",cat:"kpop"},
+      {group_key:"BTS||정국||골든||Album",artist_normalized:"BTS",member_normalized:"정국",album_or_event_normalized:"Golden",source_type_normalized:"Album",exclude:false,pid:"004",price:11000,name:"BTS Jungkook Golden pc 4",image:"",cat:"kpop"},
+      {group_key:"BTS||정국||골든||Album",artist_normalized:"BTS",member_normalized:"정국",album_or_event_normalized:"Golden",source_type_normalized:"Album",exclude:false,pid:"005",price:8000,name:"BTS Jungkook Golden pc 5",image:"",cat:"kpop"},
+      {group_key:"BTS||정국||골든||Album",artist_normalized:"BTS",member_normalized:"정국",album_or_event_normalized:"Golden",source_type_normalized:"Album",exclude:false,pid:"005b",price:13000,name:"BTS Jungkook Golden pc 6",image:"",cat:"kpop"},
+      {group_key:"BTS||정국||골든||Album",artist_normalized:"BTS",member_normalized:"정국",album_or_event_normalized:"Golden",source_type_normalized:"Album",exclude:false,pid:"005c",price:7000,name:"BTS Jungkook Golden pc 7",image:"",cat:"kpop"},
+      {group_key:"BTS||정국||골든||Album",artist_normalized:"BTS",member_normalized:"정국",album_or_event_normalized:"Golden",source_type_normalized:"Album",exclude:false,pid:"005d",price:17000,name:"BTS Jungkook Golden pc 8",image:"",cat:"kpop"},
+      {group_key:"BTS||지민||FACE||Album",artist_normalized:"BTS",member_normalized:"지민",album_or_event_normalized:"FACE",source_type_normalized:"Album",exclude:false,pid:"006",price:20000,name:"BTS Jimin FACE photocard",image:"",cat:"kpop"},
+      {group_key:"BTS||지민||FACE||Album",artist_normalized:"BTS",member_normalized:"지민",album_or_event_normalized:"FACE",source_type_normalized:"Album",exclude:false,pid:"007",price:18000,name:"BTS Jimin FACE pc 2",image:"",cat:"kpop"},
+      {group_key:"BTS||지민||FACE||Album",artist_normalized:"BTS",member_normalized:"지민",album_or_event_normalized:"FACE",source_type_normalized:"Album",exclude:false,pid:"008",price:25000,name:"BTS Jimin FACE pc 3",image:"",cat:"kpop"},
+      {group_key:"BTS||지민||FACE||Album",artist_normalized:"BTS",member_normalized:"지민",album_or_event_normalized:"FACE",source_type_normalized:"Album",exclude:false,pid:"008b",price:22000,name:"BTS Jimin FACE pc 4",image:"",cat:"kpop"},
+      {group_key:"ENHYPEN||니키||로맨스 언톨드||Album",artist_normalized:"ENHYPEN",member_normalized:"니키",album_or_event_normalized:"Romance: Untold",source_type_normalized:"Album",exclude:false,pid:"009",price:3000,name:"ENHYPEN Niki Romance Untold photocard",image:"",cat:"kpop"},
+      {group_key:"ENHYPEN||니키||로맨스 언톨드||Album",artist_normalized:"ENHYPEN",member_normalized:"니키",album_or_event_normalized:"Romance: Untold",source_type_normalized:"Album",exclude:false,pid:"010",price:5000,name:"ENHYPEN Niki Romance Untold pc 2",image:"",cat:"kpop"},
+      {group_key:"ENHYPEN||니키||로맨스 언톨드||Album",artist_normalized:"ENHYPEN",member_normalized:"니키",album_or_event_normalized:"Romance: Untold",source_type_normalized:"Album",exclude:false,pid:"011",price:4000,name:"ENHYPEN Niki Romance Untold pc 3",image:"",cat:"kpop"},
+      {group_key:"Stray Kids||아이엔||초콜릿팩토리||Album",artist_normalized:"Stray Kids",member_normalized:"아이엔",album_or_event_normalized:"Chocolate Factory",source_type_normalized:"Album",exclude:false,pid:"012",price:10000,name:"Stray Kids I.N Chocolate Factory",image:"",cat:"kpop"},
+      {group_key:"Stray Kids||아이엔||초콜릿팩토리||Album",artist_normalized:"Stray Kids",member_normalized:"아이엔",album_or_event_normalized:"Chocolate Factory",source_type_normalized:"Album",exclude:false,pid:"013",price:8000,name:"Stray Kids I.N Chocolate Factory 2",image:"",cat:"kpop"},
+      {group_key:"SEVENTEEN||호시||항공틴||Fan Club",artist_normalized:"SEVENTEEN",member_normalized:"호시",album_or_event_normalized:"Membership Kit",source_type_normalized:"Fan Club",exclude:false,pid:"014",price:25000,name:"SEVENTEEN Hoshi membership photocard",image:"",cat:"kpop"},
+      {group_key:"SEVENTEEN||호시||항공틴||Fan Club",artist_normalized:"SEVENTEEN",member_normalized:"호시",album_or_event_normalized:"Membership Kit",source_type_normalized:"Fan Club",exclude:false,pid:"015",price:30000,name:"SEVENTEEN Hoshi membership pc 2",image:"",cat:"kpop"},
+      {group_key:"TWS||도훈||24/7 FOR YOU||Concert",artist_normalized:"TWS",member_normalized:"도훈",album_or_event_normalized:"24/7 FOR YOU",source_type_normalized:"Concert",exclude:false,pid:"017",price:25000,name:"TWS Dohoon concert photocard",image:"",cat:"kpop"},
+      {group_key:"TWS||도훈||24/7 FOR YOU||Concert",artist_normalized:"TWS",member_normalized:"도훈",album_or_event_normalized:"24/7 FOR YOU",source_type_normalized:"Concert",exclude:false,pid:"018",price:35000,name:"TWS Dohoon concert pc 2",image:"",cat:"kpop"},
+    ];
+    allGroups=buildGroups(mock);
+    buildFilters(allGroups.filter(g=>g.cat==="kpop"));
+    renderGrid();
+  });
+</script>
+</body>
+</html>

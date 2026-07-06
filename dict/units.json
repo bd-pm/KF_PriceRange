@@ -1,0 +1,76 @@
+{
+  "_comment": "공식 유닛/서브유닛 정보. member 필드에 단일 멤버 대신 유닛명이 들어올 수 있음.",
+
+  "SEVENTEEN": {
+    "부석순": {
+      "aliases": ["부석순", "BSS", "bss"],
+      "members": ["부승관", "이석민", "박지훈"]
+    },
+    "호시민규": {
+      "aliases": ["호시민규", "HoShua", "호슈아"],
+      "members": ["호시", "조슈아"]
+    }
+  },
+  "NCT": {
+    "NCT U": {
+      "aliases": ["NCT U", "엔시티유"],
+      "members": []
+    }
+  },
+  "NCT 127": {
+    "WayZenNi": {
+      "aliases": ["WayZenNi", "웨이젠니"],
+      "members": ["유타", "정우", "해찬"]
+    }
+  },
+  "Stray Kids": {
+    "3RACHA": {
+      "aliases": ["3RACHA", "쓰리라차"],
+      "members": ["방찬", "한", "창빈"]
+    }
+  },
+  "TXT": {
+    "목갈머": {
+      "aliases": ["목갈머", "GBGB 유닛"],
+      "members": ["연준", "범규"]
+    },
+    "떨차": {
+      "aliases": ["떨차"],
+      "members": ["수빈", "태현", "휴닝카이"]
+    }
+  },
+  "DAY6": {
+    "Even of Day": {
+      "aliases": ["이오데", "Even of Day", "even of day"],
+      "members": ["영케이", "도운", "원필"]
+    },
+    "유닛": {
+      "aliases": ["유닛"],
+      "members": []
+    }
+  },
+  "The Boyz": {
+    "늑댕즈": {
+      "aliases": ["늑댕즈"],
+      "members": ["도훈", "신유"]
+    }
+  },
+  "TWS": {
+    "늑댕즈": {
+      "aliases": ["늑댕즈", "Neokdaengz", "neokdaengz"],
+      "members": ["도훈", "신유"]
+    }
+  },
+  "Boynextdoor": {
+    "제복": {
+      "aliases": ["제복"],
+      "members": ["명재현", "리우"]
+    }
+  },
+  "ZeroBaseOne": {
+    "아우어블루": {
+      "aliases": ["아우어블루", "OUR BLUE"],
+      "members": []
+    }
+  }
+}
