@@ -23,7 +23,7 @@ Output JSON only, no explanation.
 Fields to extract:
 - artist: group/artist name only. Use the most common Korean or English name as-is (e.g. "방탄소년단", "BTS", "스트레이키즈", "ENHYPEN"). Do NOT confuse album names or event names for artist names.
 - member: single member name in Korean (e.g. "정국", "니키"). For official sub-units/units use the unit name as-is (e.g. "부석순", "이오데", "3RACHA", "늑댕즈", "제복", "목갈머", "떨차"). null if no single member or unit is identifiable.
-- album_or_event: the most specific album title, concert name, collab brand, or event name found. null if truly absent. Do NOT use generic words like "포카", "양도", "판매" as album names.
+- album_or_event: the most specific album title, concert name, collab brand, or event name found. ALWAYS output in English — use the official English title/name if known (e.g. "골든"→"GOLDEN", "로맨스 언톨드"→"Romance: Untold", "공차"→"Gong Cha"); if there is no official English name, output a romanized transliteration instead — never output Korean/Hangul characters in this field. null if truly absent. Do NOT use generic words like "포카", "양도", "판매" as album names.
 - source_type: classify the origin of the photocard — one of: "Album", "Concert", "Fan Meeting", "Season's Greeting", "Fan Club", "Fan Sign", "Collabo", "Benefit", "Etc"
 - exclude: true if this listing should be excluded
 - exclude_reason: short reason if excluded, else null
@@ -47,14 +47,14 @@ Important disambiguation:
 - "콘서트", "공방", "투어" → source_type: "Concert"
 - "콜라보", specific brand names (메디힐, 맥도날드, 크록스 etc.) → source_type: "Collabo"
 
-album_or_event examples by source_type:
-- Album: "골든", "로맨스 언톨드", "ODDINARY", "질주"
-- Concert: "부산콘", "투어", specific tour name
-- Fan Club: "멤버십 3기", "아미키트", "위버스 멤버십"
-- Collabo: "메디힐", "크록스", brand name
-- Benefit: "미공포", "특전", "알라딘 특전"
-- Fan Sign: "팬사인회", "싸폴"
-- Fan Meeting: specific fan meeting name"""
+album_or_event examples by source_type (all in English):
+- Album: "GOLDEN", "Romance: Untold", "ODDINARY", "Rock-Star"
+- Concert: "Busan Concert", "World Tour", specific tour name in English
+- Fan Club: "Membership 3rd Gen", "ARMY Membership Kit", "Weverse Membership"
+- Collabo: "Mediheal", "Crocs", brand name in English
+- Benefit: "Unreleased Photocard", "Purchase Benefit", "Aladin Benefit"
+- Fan Sign: "Fan Signing Event", "Signed Polaroid"
+- Fan Meeting: specific fan meeting name in English"""
 
 
 def parse_batch(titles: list) -> list:
@@ -120,7 +120,7 @@ def main():
                 "pid": item["pid"],
                 "name": item["name"],
                 "price": item["price"],
-                "image": item.get("image", ""),
+                "image": item.get("product_image", ""),
                 **parsed
             }
             normalized = normalize(merged)
