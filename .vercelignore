@@ -2,4 +2,4 @@
 samples.json
 __pycache__/
 *.pyc
-.vercel
+.claude/
