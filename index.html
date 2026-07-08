@@ -224,6 +224,15 @@ body{font-family:'Nunito Sans',-apple-system,sans-serif;background:var(--bg);col
         </div>
       </div>
     </button>
+    <button class="cat-tab" id="tabPokemon" onclick="switchCat('pokemon')">
+      <div class="cat-tab-inner">
+        <span class="cat-tab-emoji">🃏</span>
+        <div class="cat-tab-text">
+          <span class="cat-tab-name">Pokémon</span>
+          <span class="cat-tab-sub">Trading Cards</span>
+        </div>
+      </div>
+    </button>
     <button class="cat-tab" id="tabKpop" onclick="switchCat('kpop')">
       <div class="cat-tab-inner">
         <span class="cat-tab-emoji">🎴</span>
@@ -342,6 +351,7 @@ function switchCat(cat){
   activeArtist=null; activeType=null;
   document.getElementById("tabKpop").classList.toggle("active",cat==="kpop");
   document.getElementById("tabKidult").classList.toggle("active",cat==="kidult");
+  document.getElementById("tabPokemon").classList.toggle("active",cat==="pokemon");
   buildFilters(allGroups.filter(g=>g.cat===cat));
   renderGrid();
 }
@@ -350,28 +360,33 @@ function buildGroups(data){
   const map={};
   data.filter(r=>!r.exclude&&r.group_key).forEach(r=>{
     const k=r.group_key;
-    // determine category: figure_doll vs photocard
     const cat = r.cat || "kpop";
-    if(!map[k]) map[k]={key:k,cat,artist:r.artist_normalized,member:r.member_normalized,album:r.album_or_event_normalized,type:r.source_type_normalized,items:[]};
+    // pokemon: artist chip = character name, member = set name
+    const artist = cat==="pokemon" ? (r.member_normalized||"Unknown") : r.artist_normalized;
+    const member = cat==="pokemon" ? (r.album_or_event_normalized||"") : r.member_normalized;
+    if(!map[k]) map[k]={key:k,cat,artist,member,album:r.album_or_event_normalized,type:r.source_type_normalized,items:[]};
     map[k].items.push({pid:r.pid,price:Number(r.price)||0,name:r.name,image:imgUrl(r.image)});
   });
   return Object.values(map).filter(g=>g.items.length>=1);
 }
 
 function buildFilters(groups){
+  const isPokemon = activeCat==="pokemon";
+  // Row 1: Artist (kpop/kidult) or Pokémon character (pokemon)
   const aCounts={};
   groups.forEach(g=>{aCounts[g.artist]=(aCounts[g.artist]||0)+g.items.length;});
   const artists=Object.entries(aCounts).sort((a,b)=>b[1]-a[1]);
   const ar=document.getElementById("artistRow");
-  ar.innerHTML='<span class="filter-label">Artist</span>';
+  ar.innerHTML=`<span class="filter-label">${isPokemon?"Pokémon":"Artist"}</span>`;
   makeChip(ar,"All",null,"artist");
   artists.slice(0,20).forEach(([a,c])=>makeChip(ar,a,c,"artist"));
 
+  // Row 2: Type (kpop/kidult) or Rarity (pokemon)
   const tCounts={};
   groups.forEach(g=>{tCounts[g.type]=(tCounts[g.type]||0)+g.items.length;});
   const types=Object.entries(tCounts).sort((a,b)=>b[1]-a[1]);
   const tr=document.getElementById("typeRow");
-  tr.innerHTML='<span class="filter-label">Type</span>';
+  tr.innerHTML=`<span class="filter-label">${isPokemon?"Rarity":"Type"}</span>`;
   makeChip(tr,"All",null,"type");
   types.forEach(([t,c])=>makeChip(tr,t,c,"type"));
 }
@@ -524,7 +539,8 @@ function renderCard(g, cid){
   const withImg=g.items.filter(i=>i.image);
   const thumbUrl=withImg.length?withImg[Math.floor(Math.random()*withImg.length)].image:"";
 
-  const memberEn=enName(g.member||"");
+  const isPokemonCat=g.cat==="pokemon";
+  const memberEn=isPokemonCat?(g.member||""):(enName(g.member||""));
 
   const h=buildHisto(g.items);
 
@@ -561,9 +577,9 @@ function renderCard(g, cid){
   </div>
   <div class="card-body">
     <div class="card-click-area" onclick="openGroupModal('${cid}')">
-      <div class="card-artist">${g.artist||""}</div>
-      <div class="card-member">${memberEn}</div>
-      <div class="card-album">${g.album||""}</div>
+      <div class="card-artist">${isPokemonCat?"Pokémon · "+(g.type||""):(g.artist||"")}</div>
+      <div class="card-member">${isPokemonCat?(g.artist||""):memberEn}</div>
+      <div class="card-album">${isPokemonCat?(g.album||""):(g.album||"")}</div>
       <span class="confidence ${confCls}">${confText}</span>
       <div class="price-row">
         <span class="price-main">${toUSD(med)}</span>
@@ -665,12 +681,14 @@ attachHistoEvents();
 Promise.all([
   fetch("parsed_all.json").then(r=>r.json()).catch(()=>[]),
   fetch("parsed_kidult.json").then(r=>r.json()).catch(()=>[]),
+  fetch("parsed_pokemon.json").then(r=>r.json()).catch(()=>[]),
 ])
-  .then(([kpopData, kidultData])=>{
-    if(kpopData.length===0 && kidultData.length===0) throw new Error("no data");
+  .then(([kpopData, kidultData, pokemonData])=>{
+    if(kpopData.length===0 && kidultData.length===0 && pokemonData.length===0) throw new Error("no data");
     const tagged=[
       ...kpopData.map(r=>({...r, cat:"kpop"})),
       ...kidultData.map(r=>({...r, cat:"kidult"})),
+      ...pokemonData.map(r=>({...r, cat:"pokemon"})),
     ];
     allGroups=buildGroups(tagged);
     buildFilters(allGroups.filter(g=>g.cat===activeCat));
