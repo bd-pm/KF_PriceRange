@@ -492,12 +492,13 @@ function cancelHide(){ if(hideTimer){clearTimeout(hideTimer); hideTimer=null;} }
 tt.addEventListener("mouseenter",()=>{overTooltip=true; cancelHide();});
 tt.addEventListener("mouseleave",()=>{overTooltip=false; scheduleHide();});
 document.addEventListener("mousemove",e=>{ if(ttActive && !overTooltip && !ttPinned) moveTT(e); });
-// 바깥 클릭으로 pinned tooltip 닫기
+// 바깥 클릭으로 pinned tooltip 닫기 (capture로 stopPropagation 우회)
 document.addEventListener("click",e=>{
-  if(ttPinned && !tt.contains(e.target) && !e.target.closest(".hbar")){
-    unpinAndHide();
-  }
-});
+  if(!ttPinned) return;
+  if(tt.contains(e.target)) return;
+  if(e.target.closest(".hbar")) return;
+  unpinAndHide();
+}, true);
 document.addEventListener("keydown",e=>{ if(e.key==="Escape" && ttPinned) unpinAndHide(); });
 
 // ── Group listings modal ────────────────────────────────────────────────
@@ -640,7 +641,6 @@ function attachHistoEvents(){
   document.addEventListener("click", e=>{
     const hit = getHoveredBin(e);
     if(!hit) return;
-    e.stopPropagation();
     ttPinned=true;
     tt.classList.add("pinned");
     showTT(e, hit.bin, hit.binMin, hit.binMax);
