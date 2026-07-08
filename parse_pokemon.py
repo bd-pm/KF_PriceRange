@@ -13,6 +13,7 @@ from typing import Optional, Tuple
 import anthropic
 from dotenv import load_dotenv
 from pathlib import Path
+from filters import pre_filter
 
 load_dotenv()
 client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
@@ -251,9 +252,30 @@ def main():
     processed = 0
     for i in range(0, len(items), batch_size):
         batch = items[i:i+batch_size]
-        parsed_list = parse_batch(batch)
 
-        for item, parsed in zip(batch, parsed_list):
+        # 사전 필터(구매/구함 글 등) 적용
+        filtered_batch = []
+        for item in batch:
+            base = {
+                "pid": item["pid"],
+                "name": item["name"],
+                "price": int(str(item.get("price", 0)).replace(",", "").strip() or 0),
+                "image": item.get("product_image", "") or item.get("image", ""),
+                "cat": "pokemon",
+            }
+            blocked = pre_filter(base)
+            if blocked:
+                results[item["pid"]] = blocked
+            else:
+                filtered_batch.append(item)
+
+        if not filtered_batch:
+            processed += len(batch)
+            continue
+
+        parsed_list = parse_batch(filtered_batch)
+
+        for item, parsed in zip(filtered_batch, parsed_list):
             base = {
                 "pid": item["pid"],
                 "name": item["name"],

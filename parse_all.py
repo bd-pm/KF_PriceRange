@@ -11,6 +11,7 @@ from typing import Optional
 import anthropic
 from dotenv import load_dotenv
 from normalize import normalize
+from filters import pre_filter
 
 load_dotenv()
 
@@ -113,9 +114,28 @@ def main():
         batch_items = pending[i:i+batch_size]
         batch_titles = [it["name"] for it in batch_items]
 
-        parsed_list = parse_batch(batch_titles)
+        # 사전 필터(구매/구함 글 등) 적용
+        filtered_batch = []
+        for item in batch_items:
+            base = {
+                "pid": item["pid"],
+                "name": item["name"],
+                "price": item["price"],
+                "image": item.get("product_image", ""),
+            }
+            blocked = pre_filter(base)
+            if blocked:
+                results[item["pid"]] = blocked
+            else:
+                filtered_batch.append(item)
 
-        for item, parsed in zip(batch_items, parsed_list):
+        if not filtered_batch:
+            processed += len(batch_items)
+            continue
+
+        parsed_list = parse_batch([it["name"] for it in filtered_batch])
+
+        for item, parsed in zip(filtered_batch, parsed_list):
             merged = {
                 "pid": item["pid"],
                 "name": item["name"],
