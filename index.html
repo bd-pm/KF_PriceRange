@@ -136,6 +136,7 @@ body{font-family:'Nunito Sans',-apple-system,sans-serif;background:var(--bg);col
   display:flex;flex-direction:column;
 }
 .tooltip.show{opacity:1}
+.tooltip.pinned{box-shadow:0 8px 40px rgba(0,0,0,.45),0 0 0 2px var(--accent);}
 .tooltip-header{padding:9px 12px;font-size:10.5px;font-weight:700;color:rgba(255,255,255,.5);border-bottom:1px solid rgba(255,255,255,.08);flex-shrink:0}
 .tooltip-list{overflow-y:auto}
 .tooltip-item{display:flex;align-items:center;gap:8px;padding:7px 12px;cursor:pointer;transition:background .1s}
@@ -415,7 +416,7 @@ function getSorted(groups){
 
 // ── Tooltip ──────────────────────────────────────────────────────────────
 const tt=document.getElementById("tooltip");
-let ttActive=false, overTooltip=false, hideTimer=null;
+let ttActive=false, overTooltip=false, hideTimer=null, ttPinned=false;
 
 function escHtml(s){ return (s||"").replace(/[&<>"']/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
 function bunjangUrl(pid){ return `https://globalbunjang.com/product/${pid}`; }
@@ -469,12 +470,20 @@ function moveTT(e){
   if(y+H>window.innerHeight-8) y=window.innerHeight-H-8;
   tt.style.left=x+"px"; tt.style.top=y+"px";
 }
-function hideTT(){ tt.classList.remove("show"); ttActive=false; }
-function scheduleHide(){ hideTimer=setTimeout(hideTT,150); }
+function hideTT(){ if(ttPinned) return; tt.classList.remove("show"); ttActive=false; }
+function unpinAndHide(){ ttPinned=false; tt.classList.remove("show","pinned"); ttActive=false; }
+function scheduleHide(){ if(ttPinned) return; hideTimer=setTimeout(hideTT,150); }
 function cancelHide(){ if(hideTimer){clearTimeout(hideTimer); hideTimer=null;} }
 tt.addEventListener("mouseenter",()=>{overTooltip=true; cancelHide();});
 tt.addEventListener("mouseleave",()=>{overTooltip=false; scheduleHide();});
-document.addEventListener("mousemove",e=>{ if(ttActive && !overTooltip) moveTT(e); });
+document.addEventListener("mousemove",e=>{ if(ttActive && !overTooltip && !ttPinned) moveTT(e); });
+// 바깥 클릭으로 pinned tooltip 닫기
+document.addEventListener("click",e=>{
+  if(ttPinned && !tt.contains(e.target) && !e.target.closest(".hbar")){
+    unpinAndHide();
+  }
+});
+document.addEventListener("keydown",e=>{ if(e.key==="Escape" && ttPinned) unpinAndHide(); });
 
 // ── Group listings modal ────────────────────────────────────────────────
 let modalGen=0;
@@ -615,8 +624,10 @@ function attachHistoEvents(){
   document.addEventListener("click", e=>{
     const hit = getHoveredBin(e);
     if(!hit) return;
-    const cheapest = hit.bin.items.reduce((a,b)=>a.price<b.price?a:b);
-    window.open(bunjangUrl(cheapest.pid),"_blank");
+    e.stopPropagation();
+    ttPinned=true;
+    tt.classList.add("pinned");
+    showTT(e, hit.bin, hit.binMin, hit.binMax);
   });
 }
 
