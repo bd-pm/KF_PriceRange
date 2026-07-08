@@ -196,7 +196,7 @@ body{font-family:'Nunito Sans',-apple-system,sans-serif;background:var(--bg);col
 <header class="header">
   <div class="header-inner">
     <div class="logo">
-      <span class="logo-bj">bunjang</span>
+      <span class="logo-bj">Bunjang</span>
       <div class="logo-sep"></div>
       <span class="logo-pr">Price Range</span>
     </div>
@@ -694,33 +694,10 @@ Promise.all([
     buildFilters(allGroups.filter(g=>g.cat===activeCat));
     renderGrid();
   })
-  .catch(()=>{
-    // mock fallback
-    const mock=[
-      {group_key:"BTS||정국||골든||Album",artist_normalized:"BTS",member_normalized:"정국",album_or_event_normalized:"Golden",source_type_normalized:"Album",exclude:false,pid:"001",price:12000,name:"BTS Jungkook Golden photocard",image:"",cat:"kpop"},
-      {group_key:"BTS||정국||골든||Album",artist_normalized:"BTS",member_normalized:"정국",album_or_event_normalized:"Golden",source_type_normalized:"Album",exclude:false,pid:"002",price:9000,name:"BTS Jungkook Golden pc",image:"",cat:"kpop"},
-      {group_key:"BTS||정국||골든||Album",artist_normalized:"BTS",member_normalized:"정국",album_or_event_normalized:"Golden",source_type_normalized:"Album",exclude:false,pid:"003",price:15000,name:"BTS Jungkook Golden photocard 3",image:"",cat:"kpop"},
-      {group_key:"BTS||정국||골든||Album",artist_normalized:"BTS",member_normalized:"정국",album_or_event_normalized:"Golden",source_type_normalized:"Album",exclude:false,pid:"004",price:11000,name:"BTS Jungkook Golden pc 4",image:"",cat:"kpop"},
-      {group_key:"BTS||정국||골든||Album",artist_normalized:"BTS",member_normalized:"정국",album_or_event_normalized:"Golden",source_type_normalized:"Album",exclude:false,pid:"005",price:8000,name:"BTS Jungkook Golden pc 5",image:"",cat:"kpop"},
-      {group_key:"BTS||정국||골든||Album",artist_normalized:"BTS",member_normalized:"정국",album_or_event_normalized:"Golden",source_type_normalized:"Album",exclude:false,pid:"005b",price:13000,name:"BTS Jungkook Golden pc 6",image:"",cat:"kpop"},
-      {group_key:"BTS||정국||골든||Album",artist_normalized:"BTS",member_normalized:"정국",album_or_event_normalized:"Golden",source_type_normalized:"Album",exclude:false,pid:"005c",price:7000,name:"BTS Jungkook Golden pc 7",image:"",cat:"kpop"},
-      {group_key:"BTS||정국||골든||Album",artist_normalized:"BTS",member_normalized:"정국",album_or_event_normalized:"Golden",source_type_normalized:"Album",exclude:false,pid:"005d",price:17000,name:"BTS Jungkook Golden pc 8",image:"",cat:"kpop"},
-      {group_key:"BTS||지민||FACE||Album",artist_normalized:"BTS",member_normalized:"지민",album_or_event_normalized:"FACE",source_type_normalized:"Album",exclude:false,pid:"006",price:20000,name:"BTS Jimin FACE photocard",image:"",cat:"kpop"},
-      {group_key:"BTS||지민||FACE||Album",artist_normalized:"BTS",member_normalized:"지민",album_or_event_normalized:"FACE",source_type_normalized:"Album",exclude:false,pid:"007",price:18000,name:"BTS Jimin FACE pc 2",image:"",cat:"kpop"},
-      {group_key:"BTS||지민||FACE||Album",artist_normalized:"BTS",member_normalized:"지민",album_or_event_normalized:"FACE",source_type_normalized:"Album",exclude:false,pid:"008",price:25000,name:"BTS Jimin FACE pc 3",image:"",cat:"kpop"},
-      {group_key:"BTS||지민||FACE||Album",artist_normalized:"BTS",member_normalized:"지민",album_or_event_normalized:"FACE",source_type_normalized:"Album",exclude:false,pid:"008b",price:22000,name:"BTS Jimin FACE pc 4",image:"",cat:"kpop"},
-      {group_key:"ENHYPEN||니키||로맨스 언톨드||Album",artist_normalized:"ENHYPEN",member_normalized:"니키",album_or_event_normalized:"Romance: Untold",source_type_normalized:"Album",exclude:false,pid:"009",price:3000,name:"ENHYPEN Niki Romance Untold photocard",image:"",cat:"kpop"},
-      {group_key:"ENHYPEN||니키||로맨스 언톨드||Album",artist_normalized:"ENHYPEN",member_normalized:"니키",album_or_event_normalized:"Romance: Untold",source_type_normalized:"Album",exclude:false,pid:"010",price:5000,name:"ENHYPEN Niki Romance Untold pc 2",image:"",cat:"kpop"},
-      {group_key:"ENHYPEN||니키||로맨스 언톨드||Album",artist_normalized:"ENHYPEN",member_normalized:"니키",album_or_event_normalized:"Romance: Untold",source_type_normalized:"Album",exclude:false,pid:"011",price:4000,name:"ENHYPEN Niki Romance Untold pc 3",image:"",cat:"kpop"},
-      {group_key:"Stray Kids||아이엔||초콜릿팩토리||Album",artist_normalized:"Stray Kids",member_normalized:"아이엔",album_or_event_normalized:"Chocolate Factory",source_type_normalized:"Album",exclude:false,pid:"012",price:10000,name:"Stray Kids I.N Chocolate Factory",image:"",cat:"kpop"},
-      {group_key:"Stray Kids||아이엔||초콜릿팩토리||Album",artist_normalized:"Stray Kids",member_normalized:"아이엔",album_or_event_normalized:"Chocolate Factory",source_type_normalized:"Album",exclude:false,pid:"013",price:8000,name:"Stray Kids I.N Chocolate Factory 2",image:"",cat:"kpop"},
-      {group_key:"SEVENTEEN||호시||항공틴||Fan Club",artist_normalized:"SEVENTEEN",member_normalized:"호시",album_or_event_normalized:"Membership Kit",source_type_normalized:"Fan Club",exclude:false,pid:"014",price:25000,name:"SEVENTEEN Hoshi membership photocard",image:"",cat:"kpop"},
-      {group_key:"SEVENTEEN||호시||항공틴||Fan Club",artist_normalized:"SEVENTEEN",member_normalized:"호시",album_or_event_normalized:"Membership Kit",source_type_normalized:"Fan Club",exclude:false,pid:"015",price:30000,name:"SEVENTEEN Hoshi membership pc 2",image:"",cat:"kpop"},
-      {group_key:"TWS||도훈||24/7 FOR YOU||Concert",artist_normalized:"TWS",member_normalized:"도훈",album_or_event_normalized:"24/7 FOR YOU",source_type_normalized:"Concert",exclude:false,pid:"017",price:25000,name:"TWS Dohoon concert photocard",image:"",cat:"kpop"},
-      {group_key:"TWS||도훈||24/7 FOR YOU||Concert",artist_normalized:"TWS",member_normalized:"도훈",album_or_event_normalized:"24/7 FOR YOU",source_type_normalized:"Concert",exclude:false,pid:"018",price:35000,name:"TWS Dohoon concert pc 2",image:"",cat:"kpop"},
-    ];
-    allGroups=buildGroups(mock);
-    buildFilters(allGroups.filter(g=>g.cat==="kpop"));
+  .catch(err=>{
+    console.error("Data load error:", err);
+    allGroups=[];
+    buildFilters([]);
     renderGrid();
   });
 </script>
