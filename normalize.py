@@ -152,8 +152,8 @@ def normalize_album_or_event(artist: str, raw: Optional[str]) -> Optional[str]:
     if key in album_map:
         return album_map[key]
 
-    # 부분 매칭 (앨범명이 raw에 포함된 경우)
-    for alias_lower, canonical in album_map.items():
+    # 부분 매칭 (앨범명이 raw에 포함된 경우) — 더 긴 alias 우선
+    for alias_lower, canonical in sorted(album_map.items(), key=lambda x: -len(x[0])):
         if alias_lower in key:
             return canonical
 
