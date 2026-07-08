@@ -543,7 +543,7 @@ function renderCard(g, cid){
 
   return `
 <div class="card" data-cid="${cid}">
-  <div class="card-img-wrap" onclick="window.open('${itemUrl}','_blank')">
+  <div class="card-img-wrap" onclick="openGroupModal('${cid}')">
     ${thumbUrl
       ?`<img class="card-img" src="${thumbUrl}" alt="${memberEn}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`
       :""}
@@ -551,7 +551,7 @@ function renderCard(g, cid){
     <span class="card-type-badge" style="background:${color.bg};color:${color.text}">${g.type}</span>
   </div>
   <div class="card-body">
-    <div class="card-click-area" onclick="window.open('${itemUrl}','_blank')">
+    <div class="card-click-area" onclick="openGroupModal('${cid}')">
       <div class="card-artist">${g.artist||""}</div>
       <div class="card-member">${memberEn}</div>
       <div class="card-album">${g.album||""}</div>
