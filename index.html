@@ -77,7 +77,7 @@ body{font-family:'Nunito Sans',-apple-system,sans-serif;background:var(--bg);col
 .grid{max-width:1240px;margin:0 auto;padding:0 16px 56px;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
 
 /* ── Card ── */
-.card{background:var(--surface);border-radius:var(--radius-card);border:1px solid var(--border2);overflow:visible;cursor:pointer;transition:transform .15s,box-shadow .15s,border-color .15s;display:flex;flex-direction:column;position:relative}
+.card{min-width:0;background:var(--surface);border-radius:var(--radius-card);border:1px solid var(--border2);overflow:visible;cursor:pointer;transition:transform .15s,box-shadow .15s,border-color .15s;display:flex;flex-direction:column;position:relative}
 .card:hover{transform:translateY(-3px);box-shadow:var(--shadow-hover);border-color:var(--border)}
 .card-img-wrap{position:relative;width:100%;aspect-ratio:1;background:var(--surface2);overflow:hidden;border-radius:var(--radius-card) var(--radius-card) 0 0;flex-shrink:0}
 .card-img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s}
@@ -105,7 +105,7 @@ body{font-family:'Nunito Sans',-apple-system,sans-serif;background:var(--bg);col
 .histo{display:flex;align-items:flex-end;gap:2px;height:32px}
 .hbar{
   flex:1;border-radius:2px 2px 0 0;min-height:3px;
-  position:relative;cursor:crosshair;
+  position:relative;cursor:pointer;
   /* IMPORTANT: pointer-events must be enabled per bar */
   pointer-events:all;
   transition:filter .1s;
@@ -114,6 +114,7 @@ body{font-family:'Nunito Sans',-apple-system,sans-serif;background:var(--bg);col
 .hbar-base{background:#e4e4ef}
 .hbar-near{background:#ffbba8}
 .hbar-peak{background:var(--accent)}
+.hbar-empty{flex:1;border-radius:2px 2px 0 0;min-height:2px;background:var(--border2);pointer-events:none}
 .histo-axis{display:flex;justify-content:space-between;margin-top:4px}
 .histo-axis span{font-size:10px;font-weight:700;color:var(--text-tertiary)}
 
@@ -129,16 +130,20 @@ body{font-family:'Nunito Sans',-apple-system,sans-serif;background:var(--bg);col
   background:#111118;color:#fff;
   border-radius:12px;padding:0;
   box-shadow:0 8px 40px rgba(0,0,0,.32);
-  pointer-events:none;
+  pointer-events:auto;
   opacity:0;transition:opacity .1s;
-  width:180px;overflow:hidden;
+  width:220px;max-height:320px;overflow:hidden;
+  display:flex;flex-direction:column;
 }
 .tooltip.show{opacity:1}
-.tooltip-img{width:100%;aspect-ratio:1;object-fit:cover;display:block;background:#2a2a3a}
-.tooltip-body{padding:10px 12px}
-.tooltip-price{font-size:18px;font-weight:800;letter-spacing:-.5px;line-height:1.1;margin-bottom:4px}
-.tooltip-name{font-size:11px;font-weight:600;color:rgba(255,255,255,.55);line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.tooltip-range{font-size:10px;font-weight:700;color:rgba(255,255,255,.35);margin-top:5px}
+.tooltip-header{padding:9px 12px;font-size:10.5px;font-weight:700;color:rgba(255,255,255,.5);border-bottom:1px solid rgba(255,255,255,.08);flex-shrink:0}
+.tooltip-list{overflow-y:auto}
+.tooltip-item{display:flex;align-items:center;gap:8px;padding:7px 12px;cursor:pointer;transition:background .1s}
+.tooltip-item:hover{background:rgba(255,255,255,.07)}
+.tooltip-item-img{width:36px;height:36px;border-radius:6px;object-fit:cover;background:#2a2a3a;flex-shrink:0}
+.tooltip-item-body{min-width:0;flex:1}
+.tooltip-item-price{font-size:12.5px;font-weight:800;line-height:1.2}
+.tooltip-item-name{font-size:10px;font-weight:600;color:rgba(255,255,255,.5);line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
 /* ── Empty ── */
 .empty{grid-column:1/-1;text-align:center;padding:80px 20px}
@@ -146,18 +151,40 @@ body{font-family:'Nunito Sans',-apple-system,sans-serif;background:var(--bg);col
 .empty-title{font-size:15px;font-weight:800;color:var(--text-secondary);margin-bottom:4px}
 .empty-sub{font-size:13px;color:var(--text-tertiary)}
 
+/* ── Group listings modal ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(10,10,16,.55);z-index:10000;display:none;align-items:center;justify-content:center;padding:24px}
+.modal-overlay.show{display:flex}
+.modal{background:var(--surface);border-radius:16px;width:100%;max-width:960px;max-height:85vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.35)}
+.modal-header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 20px;border-bottom:1px solid var(--border);flex-shrink:0}
+.modal-title{font-size:15px;font-weight:800;color:var(--text-primary)}
+.modal-sub{font-size:12px;font-weight:600;color:var(--text-secondary);margin-top:2px}
+.modal-close{width:30px;height:30px;flex-shrink:0;border-radius:100px;border:none;background:var(--surface2);cursor:pointer;font-size:13px;color:var(--text-secondary);display:flex;align-items:center;justify-content:center}
+.modal-close:hover{background:var(--chip-bg);color:var(--text-primary)}
+.modal-scroll{flex:1;min-height:0;overflow-y:auto}
+.modal-grid{padding:16px 20px 24px;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;align-content:start}
+.modal-item{cursor:pointer;border-radius:12px;overflow:hidden;border:1px solid var(--border2);background:var(--surface);transition:box-shadow .12s,transform .12s}
+.modal-item:hover{box-shadow:var(--shadow-hover);transform:translateY(-2px)}
+.modal-item-img-wrap{width:100%;aspect-ratio:1;background:var(--surface2);overflow:hidden}
+.modal-item-img{width:100%;height:100%;object-fit:cover;display:block}
+.modal-item-body{padding:8px 10px 10px}
+.modal-item-price{font-size:13px;font-weight:800;color:var(--text-primary)}
+.modal-item-name{font-size:11px;font-weight:600;color:var(--text-secondary);margin-top:3px;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;line-clamp:2;overflow:hidden}
+
 /* ── Mobile ── */
 @media(max-width:600px){
   .search-wrap{width:160px}
-  .grid{grid-template-columns:1fr 1fr;padding:0 12px 48px;gap:10px}
+  .grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);padding:0 12px 48px;gap:10px}
   .card-body{padding:10px}
   .card-member{font-size:13px}
   .price-main{font-size:18px}
   .cat-tab-inner{padding:10px 12px 9px}
   .cat-tab-emoji{font-size:18px}
+  .card-footer{flex-wrap:wrap;gap:6px}
+  .listing-stat{white-space:nowrap}
+  .go-btn{font-size:10px;padding:0 8px}
 }
 @media(max-width:380px){
-  .grid{grid-template-columns:1fr}
+  .grid{grid-template-columns:minmax(0,1fr)}
   .search-wrap{width:130px}
 }
 </style>
@@ -179,7 +206,7 @@ body{font-family:'Nunito Sans',-apple-system,sans-serif;background:var(--bg);col
           <path d="M9.2 9.2l3 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
         </svg>
       </span>
-      <input class="search-input" id="searchInput" type="text" placeholder="Artist, member…">
+      <input class="search-input" id="searchInput" type="text" placeholder="Search artist, character…">
     </div>
   </div>
 </header>
@@ -187,21 +214,21 @@ body{font-family:'Nunito Sans',-apple-system,sans-serif;background:var(--bg);col
 <!-- Category tabs -->
 <div class="cat-tabs">
   <div class="cat-tabs-inner">
-    <button class="cat-tab active" id="tabKpop" onclick="switchCat('kpop')">
-      <div class="cat-tab-inner">
-        <span class="cat-tab-emoji">🎴</span>
-        <div class="cat-tab-text">
-          <span class="cat-tab-name">K-pop</span>
-          <span class="cat-tab-sub">Photocards</span>
-        </div>
-      </div>
-    </button>
-    <button class="cat-tab" id="tabKidult" onclick="switchCat('kidult')">
+    <button class="cat-tab active" id="tabKidult" onclick="switchCat('kidult')">
       <div class="cat-tab-inner">
         <span class="cat-tab-emoji">🧸</span>
         <div class="cat-tab-text">
           <span class="cat-tab-name">Kidult</span>
           <span class="cat-tab-sub">Figures & Dolls</span>
+        </div>
+      </div>
+    </button>
+    <button class="cat-tab" id="tabKpop" onclick="switchCat('kpop')">
+      <div class="cat-tab-inner">
+        <span class="cat-tab-emoji">🎴</span>
+        <div class="cat-tab-text">
+          <span class="cat-tab-name">K-pop</span>
+          <span class="cat-tab-sub">Photocards</span>
         </div>
       </div>
     </button>
@@ -222,11 +249,6 @@ body{font-family:'Nunito Sans',-apple-system,sans-serif;background:var(--bg);col
 <!-- Toolbar -->
 <div class="toolbar">
   <span class="result-count" id="resultCount">Loading…</span>
-  <div class="sort-group">
-    <button class="sort-btn active" data-sort="count">Most listings</button>
-    <button class="sort-btn" data-sort="median_desc">Price ↑</button>
-    <button class="sort-btn" data-sort="median_asc">Price ↓</button>
-  </div>
 </div>
 
 <!-- Grid -->
@@ -234,11 +256,23 @@ body{font-family:'Nunito Sans',-apple-system,sans-serif;background:var(--bg);col
 
 <!-- Tooltip (outside grid, fixed position) -->
 <div class="tooltip" id="tooltip">
-  <img class="tooltip-img" id="ttImg" src="" alt="">
-  <div class="tooltip-body">
-    <div class="tooltip-price" id="ttPrice"></div>
-    <div class="tooltip-name" id="ttName"></div>
-    <div class="tooltip-range" id="ttRange"></div>
+  <div class="tooltip-header" id="ttHeader"></div>
+  <div class="tooltip-list" id="ttList"></div>
+</div>
+
+<!-- Group listings modal -->
+<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this) closeModal()">
+  <div class="modal">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title" id="modalTitle"></div>
+        <div class="modal-sub" id="modalSub"></div>
+      </div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-scroll">
+      <div class="modal-grid" id="modalGrid"></div>
+    </div>
   </div>
 </div>
 
@@ -300,7 +334,7 @@ function buildHisto(items, bins=8){
 }
 
 // ── State ────────────────────────────────────────────────────────────────
-let allGroups=[], activeCat="kpop", activeArtist=null, activeType=null, sortMode="count", searchQ="";
+let allGroups=[], activeCat="kidult", activeArtist=null, activeType=null, sortMode="count", searchQ="";
 
 function switchCat(cat){
   activeCat=cat;
@@ -318,7 +352,7 @@ function buildGroups(data){
     // determine category: figure_doll vs photocard
     const cat = r.cat || "kpop";
     if(!map[k]) map[k]={key:k,cat,artist:r.artist_normalized,member:r.member_normalized,album:r.album_or_event_normalized,type:r.source_type_normalized,items:[]};
-    map[k].items.push({pid:r.pid,price:r.price,name:r.name,image:imgUrl(r.image)});
+    map[k].items.push({pid:r.pid,price:Number(r.price)||0,name:r.name,image:imgUrl(r.image)});
   });
   return Object.values(map).filter(g=>g.items.length>=1);
 }
@@ -370,9 +404,10 @@ function getFiltered(){
   }
   return g;
 }
+function validCount(g){ return g.items.filter(i=>i.price>0).length; }
 function getSorted(groups){
   return [...groups].sort((a,b)=>{
-    if(sortMode==="count") return b.items.length-a.items.length;
+    if(sortMode==="count") return validCount(b)-validCount(a);
     const ma=median(a.items.map(i=>i.price)), mb=median(b.items.map(i=>i.price));
     return sortMode==="median_desc"?mb-ma:ma-mb;
   });
@@ -380,21 +415,54 @@ function getSorted(groups){
 
 // ── Tooltip ──────────────────────────────────────────────────────────────
 const tt=document.getElementById("tooltip");
-let ttActive=false;
+let ttActive=false, overTooltip=false, hideTimer=null;
 
-function showTT(e, item, count, rangeMin, rangeMax){
-  document.getElementById("ttPrice").textContent=toUSD(item.price);
-  document.getElementById("ttName").textContent=item.name;
-  document.getElementById("ttRange").textContent=`${count} listing${count!==1?"s":""} · ${toUSD(rangeMin)}–${toUSD(rangeMax)}`;
-  const img=document.getElementById("ttImg");
-  if(item.image){img.src=item.image;img.style.display="block";}
-  else img.style.display="none";
+function escHtml(s){ return (s||"").replace(/[&<>"']/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+function bunjangUrl(pid){ return `https://globalbunjang.com/product/${pid}`; }
+
+// ── GlobalBunjang English name enrichment ───────────────────────────────
+// Names come in Korean from the domestic search API; GlobalBunjang's own
+// get-summaries endpoint (proxied via /api/goods-enrich) has the EN titles
+// buyers actually see. Render with the raw name first (instant), then swap
+// in the English name once the batch lookup resolves.
+const enrichCache={};
+async function fetchEnglishNames(pids){
+  const uncached=[...new Set(pids)].filter(p=>!(p in enrichCache));
+  if(!uncached.length) return;
+  try{
+    const res=await fetch(`/api/goods-enrich?pids=${uncached.join(",")}`);
+    if(!res.ok) throw new Error("bad response");
+    const map=await res.json();
+    uncached.forEach(p=>{ enrichCache[p]=map[p]||null; });
+  }catch(e){
+    uncached.forEach(p=>{ enrichCache[p]=null; }); // fall back to raw name, don't retry every render
+  }
+}
+function displayName(it){ return enrichCache[it.pid]||it.name; }
+
+let ttGen=0;
+function renderTooltipItems(items){
+  document.getElementById("ttList").innerHTML=items.map(it=>`
+    <div class="tooltip-item" onclick="window.open('${bunjangUrl(it.pid)}','_blank')">
+      ${it.image?`<img class="tooltip-item-img" src="${it.image}">`:`<div class="tooltip-item-img"></div>`}
+      <div class="tooltip-item-body">
+        <div class="tooltip-item-price">${toUSD(it.price)}</div>
+        <div class="tooltip-item-name">${escHtml(displayName(it))}</div>
+      </div>
+    </div>`).join("");
+}
+function showTT(e, bin, rangeMin, rangeMax){
+  const items=[...bin.items].sort((a,b)=>a.price-b.price);
+  const myGen=++ttGen;
+  document.getElementById("ttHeader").textContent=`${items.length} listing${items.length!==1?"s":""} · ${toUSD(rangeMin)}–${toUSD(rangeMax)}`;
+  renderTooltipItems(items);
   moveTT(e);
   tt.classList.add("show");
   ttActive=true;
+  fetchEnglishNames(items.map(i=>i.pid)).then(()=>{ if(myGen===ttGen) renderTooltipItems(items); });
 }
 function moveTT(e){
-  const W=190, H=document.getElementById("ttImg").style.display!=="none"?250:110;
+  const W=220, H=Math.min(tt.scrollHeight||320,320);
   let x=e.clientX+16, y=e.clientY-H/2;
   if(x+W>window.innerWidth-8) x=e.clientX-W-16;
   if(y<8) y=8;
@@ -402,7 +470,37 @@ function moveTT(e){
   tt.style.left=x+"px"; tt.style.top=y+"px";
 }
 function hideTT(){ tt.classList.remove("show"); ttActive=false; }
-document.addEventListener("mousemove",e=>{ if(ttActive) moveTT(e); });
+function scheduleHide(){ hideTimer=setTimeout(hideTT,150); }
+function cancelHide(){ if(hideTimer){clearTimeout(hideTimer); hideTimer=null;} }
+tt.addEventListener("mouseenter",()=>{overTooltip=true; cancelHide();});
+tt.addEventListener("mouseleave",()=>{overTooltip=false; scheduleHide();});
+document.addEventListener("mousemove",e=>{ if(ttActive && !overTooltip) moveTT(e); });
+
+// ── Group listings modal ────────────────────────────────────────────────
+let modalGen=0;
+function renderModalItems(items){
+  document.getElementById("modalGrid").innerHTML=items.map(it=>`
+    <div class="modal-item" onclick="window.open('${bunjangUrl(it.pid)}','_blank')">
+      <div class="modal-item-img-wrap">${it.image?`<img class="modal-item-img" src="${it.image}" loading="lazy">`:""}</div>
+      <div class="modal-item-body">
+        <div class="modal-item-price">${toUSD(it.price)}</div>
+        <div class="modal-item-name">${escHtml(displayName(it))}</div>
+      </div>
+    </div>`).join("");
+}
+function openGroupModal(cid){
+  const g=groupByCid[cid];
+  if(!g) return;
+  const items=[...g.items].sort((a,b)=>a.price-b.price);
+  const myGen=++modalGen;
+  document.getElementById("modalTitle").textContent=`${g.artist||""} ${enName(g.member||"")}`.trim();
+  document.getElementById("modalSub").textContent=`${g.album||""} · ${items.length} listing${items.length!==1?"s":""}`;
+  renderModalItems(items);
+  document.getElementById("modalOverlay").classList.add("show");
+  fetchEnglishNames(items.map(i=>i.pid)).then(()=>{ if(myGen===modalGen) renderModalItems(items); });
+}
+function closeModal(){ document.getElementById("modalOverlay").classList.remove("show"); }
+document.addEventListener("keydown",e=>{ if(e.key==="Escape") closeModal(); });
 
 // ── Card render ───────────────────────────────────────────────────────────
 let cardIdx=0;
@@ -412,7 +510,7 @@ function renderCard(g, cid){
   const med=median(prices), minP=Math.min(...prices), maxP=Math.max(...prices), n=prices.length;
   const color=TYPE_COLORS[g.type]||TYPE_COLORS["Etc"];
   const lowestItem=g.items.reduce((a,b)=>a.price<b.price?a:b);
-  const bunjangUrl=`https://m.bunjang.co.kr/products/${lowestItem.pid}`;
+  const itemUrl=bunjangUrl(lowestItem.pid);
 
   const withImg=g.items.filter(i=>i.image);
   const thumbUrl=withImg.length?withImg[Math.floor(Math.random()*withImg.length)].image:"";
@@ -431,7 +529,13 @@ function renderCard(g, cid){
     const maxC=Math.max(...h.bins.map(b=>b.count),1);
     const medBin=Math.min(Math.floor((med-h.min)/h.step),h.bins.length-1);
     h.bins.forEach((bin,i)=>{
-      const pct=Math.max(8,Math.round((bin.count/maxC)*100));
+      if(bin.count===0){
+        histHtml+=`<div class="hbar-empty" style="height:2%"></div>`;
+        return;
+      }
+      // linear rescale into [8,100] so every distinct count gets a distinct height
+      // (a flat floor like max(8, count/maxC*100) would collapse small counts to the same 8%)
+      const pct=Math.round(8+(bin.count/maxC)*92);
       const cls=i===medBin?"hbar hbar-peak":Math.abs(i-medBin)<=1?"hbar hbar-near":"hbar hbar-base";
       histHtml+=`<div class="${cls}" style="height:${pct}%" data-bin="${i}"></div>`;
     });
@@ -439,7 +543,7 @@ function renderCard(g, cid){
 
   return `
 <div class="card" data-cid="${cid}">
-  <div class="card-img-wrap" onclick="window.open('${bunjangUrl}','_blank')">
+  <div class="card-img-wrap" onclick="window.open('${itemUrl}','_blank')">
     ${thumbUrl
       ?`<img class="card-img" src="${thumbUrl}" alt="${memberEn}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`
       :""}
@@ -447,7 +551,7 @@ function renderCard(g, cid){
     <span class="card-type-badge" style="background:${color.bg};color:${color.text}">${g.type}</span>
   </div>
   <div class="card-body">
-    <div class="card-click-area" onclick="window.open('${bunjangUrl}','_blank')">
+    <div class="card-click-area" onclick="window.open('${itemUrl}','_blank')">
       <div class="card-artist">${g.artist||""}</div>
       <div class="card-member">${memberEn}</div>
       <div class="card-album">${g.album||""}</div>
@@ -463,11 +567,11 @@ function renderCard(g, cid){
       <div class="histo-axis"><span>${toUSD(h.min)}</span><span>${toUSD(h.max)}</span></div>
     </div>`:""}
     <div class="card-footer">
-      <span class="listing-stat" onclick="window.open('${bunjangUrl}','_blank')"><strong>${n}</strong> listings</span>
-      <a class="go-btn" href="${bunjangUrl}" target="_blank" onclick="event.stopPropagation()">
-        From ${toUSD(minP)}
+      <span class="listing-stat" onclick="event.stopPropagation(); openGroupModal('${cid}')"><strong>${n}</strong> listings</span>
+      <button class="go-btn" onclick="event.stopPropagation(); openGroupModal('${cid}')">
+        View all · from ${toUSD(minP)}
         <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1.5 5h7M5.5 2l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
+      </button>
     </div>
   </div>
 </div>`;
@@ -477,30 +581,42 @@ function renderCard(g, cid){
 // Store group data by cid for event delegation
 const groupByCid={};
 
+function getHoveredBin(e){
+  const bar = e.target.closest(".hbar");
+  if(!bar) return null;
+  const histo = bar.closest(".histo");
+  if(!histo) return null;
+  const cid = histo.dataset.cid;
+  const binIdx = parseInt(bar.dataset.bin);
+  if(isNaN(binIdx)) return null;
+  const g = groupByCid[cid];
+  if(!g) return null;
+  const h = buildHisto(g.items);
+  if(!h) return null;
+  const bin = h.bins[binIdx];
+  if(!bin || !bin.count) return null;
+  const binMin = h.min + binIdx * h.step;
+  const binMax = Math.min(h.min + (binIdx+1) * h.step, h.max);
+  return {bin, binMin, binMax};
+}
+
 function attachHistoEvents(){
   document.addEventListener("mouseover", e=>{
-    const bar = e.target.closest(".hbar");
-    if(!bar) return;
-    // walk up to find .histo which holds data-cid
-    const histo = bar.closest(".histo");
-    if(!histo) return;
-    const cid = histo.dataset.cid;
-    const binIdx = parseInt(bar.dataset.bin);
-    if(isNaN(binIdx)) return;
-    const g = groupByCid[cid];
-    if(!g) return;
-    const h = buildHisto(g.items);
-    if(!h) return;
-    const bin = h.bins[binIdx];
-    if(!bin || !bin.count) return;
-    const repItem = bin.items.find(i=>i.image) || bin.items[0];
-    if(!repItem) return;
-    const binMin = h.min + binIdx * h.step;
-    const binMax = Math.min(h.min + (binIdx+1) * h.step, h.max);
-    showTT(e, repItem, bin.count, binMin, binMax);
+    const hit = getHoveredBin(e);
+    if(!hit) return;
+    cancelHide();
+    showTT(e, hit.bin, hit.binMin, hit.binMax);
   });
   document.addEventListener("mouseout", e=>{
-    if(e.target.closest(".hbar")) hideTT();
+    if(!e.target.closest(".hbar")) return;
+    if(e.relatedTarget && e.relatedTarget.closest && e.relatedTarget.closest("#tooltip")) return;
+    scheduleHide();
+  });
+  document.addEventListener("click", e=>{
+    const hit = getHoveredBin(e);
+    if(!hit) return;
+    const cheapest = hit.bin.items.reduce((a,b)=>a.price<b.price?a:b);
+    window.open(bunjangUrl(cheapest.pid),"_blank");
   });
 }
 
@@ -525,16 +641,6 @@ function renderGrid(){
   grid.innerHTML=cards.join("");
 }
 
-// Sort
-document.querySelectorAll(".sort-btn").forEach(btn=>{
-  btn.addEventListener("click",()=>{
-    document.querySelectorAll(".sort-btn").forEach(b=>b.classList.remove("active"));
-    btn.classList.add("active");
-    sortMode=btn.dataset.sort;
-    renderGrid();
-  });
-});
-
 // Search
 document.getElementById("searchInput").addEventListener("input",e=>{
   searchQ=e.target.value.trim();
@@ -545,13 +651,18 @@ document.getElementById("searchInput").addEventListener("input",e=>{
 attachHistoEvents();
 
 // ── Load ──────────────────────────────────────────────────────────────────
-fetch("parsed_all.json")
-  .then(r=>r.json())
-  .then(data=>{
-    // tag each item with cat
-    const tagged=data.map(r=>({...r, cat:"kpop"}));
+Promise.all([
+  fetch("parsed_all.json").then(r=>r.json()).catch(()=>[]),
+  fetch("parsed_kidult.json").then(r=>r.json()).catch(()=>[]),
+])
+  .then(([kpopData, kidultData])=>{
+    if(kpopData.length===0 && kidultData.length===0) throw new Error("no data");
+    const tagged=[
+      ...kpopData.map(r=>({...r, cat:"kpop"})),
+      ...kidultData.map(r=>({...r, cat:"kidult"})),
+    ];
     allGroups=buildGroups(tagged);
-    buildFilters(allGroups.filter(g=>g.cat==="kpop"));
+    buildFilters(allGroups.filter(g=>g.cat===activeCat));
     renderGrid();
   })
   .catch(()=>{
